@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+   <div *ngIf="auth.currentUser">
+      <!-- Hello again, {{ auth.currentUser['first_name']. }} -->
+   </div>
+
+   <div *ngIf="output">
+      {{ output }}
+   </div>
+
+   <form (submit)="signIn(loginData.email, loginData.password)">
+    <ion-item>
+      <ion-input [(ngModel)]="loginData.email" name="email" type="text" placeholder="Email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="loginData.password" name="password" type="password" placeholder="Password"></ion-input>
+    </ion-item>
+    <button ion-button block type="submit">
+      Log In
+    </button>
+  </form>
+
+  <button (click)="auth.logOut()">Log Out</button>
+
+</ion-content>
