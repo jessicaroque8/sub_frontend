@@ -7,8 +7,9 @@
 
 
 <ion-content>
-   <div *ngIf="auth.currentUser">
-      <!-- Hello again, {{ auth.currentUser['first_name']. }} -->
+   <div *ngIf="(auth.userData != null)">
+      Hello again. You're logged in. This is deceiving. Might not be working. <br />
+      <button ion-button [navPush]="pushPage">Go to Home.</button>
    </div>
 
    <div *ngIf="output">
@@ -27,6 +28,6 @@
     </button>
   </form>
 
-  <button (click)="auth.logOut()">Log Out</button>
+  <button ion-button (click)="auth.logOut()">Log Out</button>
 
 </ion-content>

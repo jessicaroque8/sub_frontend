@@ -18,7 +18,8 @@ export class LoginPage {
         email: '',
         password: ''
      };
-   output: string
+   output: string;
+   pushPage: any;
 
   constructor(
      public navCtrl: NavController,
@@ -26,6 +27,7 @@ export class LoginPage {
      public auth: AuthProvider,
      public _tokenService: Angular2TokenService
    ) {
+      this.pushPage = TabsPage;
   }
 
   ionViewDidLoad() {
