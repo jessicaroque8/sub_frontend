@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubRequestsProvider } from '../../providers/sub-requests/sub-requests';
-/**
- * Generated class for the OpenPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { SubRequest } from '../../models/sub-request.model';
+
 
 @IonicPage()
 @Component({
@@ -15,27 +11,32 @@ import { SubRequestsProvider } from '../../providers/sub-requests/sub-requests';
 })
 export class OpenPage {
 
-   openRequests: any;
-   sent: any;
-   incoming: any;
+   viewRequests: string;
+   requests: any;
+   sent: Array<SubRequest> = [];
+   incoming: Array<SubRequest> = [];
 
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
      public sr: SubRequestsProvider
-  ) {}
+  ) {
+ }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpenPage');
-    this.loadSave();
-  }
+    this.viewRequests = 'sent';
+    this.sr.loadRequests('incomplete')
+      .subscribe(
+         requests => {
+            this.requests = requests
+            this.sent = this.requests.sent,
+            this.incoming = this.requests.incoming,
+            console.log('sent: ', this.sent),
+            console.log('incoming: ', this.incoming);
 
-  loadSave() {
-     this.sr.loadAll('incomplete').then(data => {
-        this.openRequests = data,
-        this.sent = this.openRequests.sent,
-        console.log(this.sent)
-     })
+         }, err => console.log(err)
+      );
   }
 
 }
