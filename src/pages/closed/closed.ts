@@ -10,11 +10,32 @@ import { SubRequest } from '../../models/sub-request.model';
 })
 export class ClosedPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+   viewRequests: string;
+   requests: any;
+   sent: Array<SubRequest> = [];
+   incoming: Array<SubRequest> = [];
+
+  constructor(
+     public navCtrl: NavController,
+     public navParams: NavParams,
+     public sr: SubRequestsProvider
+ ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ClosedPage');
+    this.viewRequests = 'sent';
+    this.sr.loadRequests('complete')
+      .subscribe(
+         requests => {
+            this.requests = requests
+            this.sent = this.requests.sent,
+            this.incoming = this.requests.incoming,
+            console.log('sent: ', this.sent),
+            console.log('incoming: ', this.incoming);
+
+         }, err => console.log(err)
+      );
   }
 
 }

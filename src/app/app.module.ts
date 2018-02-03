@@ -14,6 +14,7 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { OpenPage } from '../pages/open/open';
+import { ClosedPage } from '../pages/closed/closed';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -51,7 +52,8 @@ export class MyErrorHandler implements ErrorHandler {
     LoginPage,
     HomePage,
     TabsPage,
-    OpenPage
+    OpenPage,
+    ClosedPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ export class MyErrorHandler implements ErrorHandler {
     LoginPage,
     HomePage,
     TabsPage,
-    OpenPage
+    OpenPage,
+    ClosedPage
   ],
   providers: [
     StatusBar,
