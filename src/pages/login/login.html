@@ -7,7 +7,7 @@
 
 
 <ion-content>
-   <div *ngIf="(auth.userData != null)">
+   <div *ngIf="(auth.userData != undefined)">
       Hello again. You're logged in. This is deceiving. Might not be working. <br />
       <button ion-button [navPush]="pushPage">Go to Home.</button>
    </div>

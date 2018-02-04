@@ -11,7 +11,7 @@ import { User } from '../../models/user.model';
 })
 export class AccountPage {
 
-   currentUser: Object<User> = {};
+   currentUser: any;
 
   constructor(
      public navCtrl: NavController,
@@ -19,11 +19,12 @@ export class AccountPage {
      public auth: AuthProvider,
      public users: UsersProvider
   ) {
+
   }
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad AccountPage');
-      this.users.getUser(this.auth.userData['data']['id']).subscribe(
+      this.users.getUser(this.auth.userData.data.id).subscribe(
          res => {
             this.currentUser = res,
             console.log(this.currentUser);

@@ -24,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { SubRequestsProvider } from '../providers/sub-requests/sub-requests';
 import { UsersProvider } from '../providers/users/users';
+import { LoadingController } from 'ionic-angular';
 
 const IonicPro = Pro.init('6200de52', {
   appVersion: "0.0.1"

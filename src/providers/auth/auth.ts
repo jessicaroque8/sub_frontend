@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Angular2TokenService } from 'angular2-token';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 /*
   Generated class for the AuthProvider provider.
 
@@ -48,25 +49,28 @@ export class AuthProvider {
 
       }
 
+      getUserData() {
+         this.local.get('userData').then( (val) => console.log(val) );
+      }
+
       signIn(email, password) {
-         return Observable.create(observer => {
-            this._tokenService.signIn({
-               email:    email,
-               password: password
-            }).subscribe(
-               res =>      {
-                  let headers = res.headers.toJSON()
-                  this.local.set('id_token', headers['access-token'].toString());
-                  this.local.set('userData', JSON.parse(res['_body']));
-                  observer.next('success')
-               },
-               err =>    {
-                  console.log(email),
-                  console.log(password),
-                  console.log('auth error to log in:', err)
-                  observer.next('fail')
-               });
-         })
+         return this._tokenService.signIn({
+            email:    email,
+            password: password
+         }).map( (response) => {
+
+            let id_token = response.headers.toJSON() && response.headers.toJSON()['access-token']
+
+            if (id_token) {
+               this.id_token = id_token[0];
+               console.log(this.id_token);
+
+               this.local.set('userData', JSON.parse(response['_body']) );
+               return true;
+            } else {
+               return false;
+            }
+         });
       }
 
       logOut() {

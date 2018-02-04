@@ -4,6 +4,7 @@ import { SubRequestsProvider } from '../../providers/sub-requests/sub-requests';
 import { SubRequest } from '../../models/sub-request.model';
 import { UsersProvider } from '../../providers/users/users';
 import { ShowSubRequestPage } from '../sub-request/show-sub-request/show-sub-request';
+import { User } from '../../models/user.model';
 
 @IonicPage()
 @Component({
@@ -49,7 +50,8 @@ export class OpenPage {
       for(let i in view) {
          this.users.getUser(view[i].user_id).subscribe(
             res => {
-               view[i].sender_img = res.image
+               let sender = res as User;
+               view[i].sender_img = sender.image
             }, err => {
                console.log(err)
             }

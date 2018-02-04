@@ -6,6 +6,8 @@ import { TabsPage } from '../tabs/tabs'
 
 import { AuthProvider } from '../../providers/auth/auth'
 
+import { LoadingController } from 'ionic-angular';
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -20,42 +22,51 @@ export class LoginPage {
      };
    output: string;
    pushPage: any;
+   loggedIn: boolean;
+   loading: boolean;
 
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
      public auth: AuthProvider,
-     public _tokenService: Angular2TokenService
+     public _tokenService: Angular2TokenService,
+     public loadingCtrl: LoadingController
    ) {
       this.pushPage = TabsPage;
   }
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad LoginPage');
-      this.authRedirect();
-   }
-
-// Push to TabsPage not working.
-   authRedirect() {
-      this.auth.authStatus.subscribe(authenticated => {
-         console.log(authenticated == true);
-         if (authenticated == true) {
-            this.navCtrl.push(TabsPage)
-         }
-      });
+      if (this._tokenService.userSignedIn()) {
+         this.navCtrl.push(TabsPage);
+      }
    }
 
   signIn(email, password) {
-     this.auth.signIn(email, password).subscribe(value => {
-        console.log(value)
-        if (value == 'success') {
-           console.log(this.auth.id_token),
-           console.log(this.auth.userData),
-           this.navCtrl.push(TabsPage)
+     this.loading = true;
+     this.auth.signIn(email, password).toPromise().then( (result) => {
+        console.log(result);
+        if (result === true) {
+           console.log('Sign in success.'),
+           this.presentLoading();
+           setTimeout( () => {
+             this.navCtrl.push(TabsPage)
+            }, 2000);
         } else {
-           this.output = 'Invalid login credentials. Please try again.'
+           console.log('Sign in fail.'),
+           this.output = 'Invalid credentials. Please try again.';
+           this.loading = false
         }
      });
+   }
+
+   presentLoading() {
+      let loader = this.loadingCtrl.create({
+          duration: 2000,
+          spinner: 'bubbles',
+          showBackdrop: true
+      });
+      loader.present();
    }
 
 }
