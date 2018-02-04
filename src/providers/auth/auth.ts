@@ -13,9 +13,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthProvider {
 
-   id_token: any;
-   userData: any;
-   authStatus: Observable<any>
+   token: any;
+   currentUser: any;
 
   constructor(
      public http: HttpClient,
@@ -24,33 +23,16 @@ export class AuthProvider {
   )   {
          console.log('Hello AuthProvider Provider');
 
-         this.local.get('id_token').then(val => {
-            this.id_token = val
+         this.local.get('token').then(val => {
+            this.token = val;
+            console.log(this.currentUser);
           });
 
-         this.local.get('userData').then(val => {
-            this.userData = val
+         this.local.get('currentUser').then(val => {
+            this.currentUser = val;
+            console.log(this.currentUser);
          });
 
-         this.authStatus = Observable.create(observer => {
-            let authenticated = false;
-            this._tokenService.validateToken().subscribe(
-               res =>      {
-                     console.log('Authenticate success.'),
-                     authenticated = true,
-                     console.log(authenticated)
-               }, err =>    {
-                      console.log('Authenticate fail.'),
-                      console.log(authenticated)
-               }
-            );
-            observer.next(authenticated)
-         });
-
-      }
-
-      getUserData() {
-         this.local.get('userData').then( (val) => console.log(val) );
       }
 
       signIn(email, password) {
@@ -59,13 +41,20 @@ export class AuthProvider {
             password: password
          }).map( (response) => {
 
-            let id_token = response.headers.toJSON() && response.headers.toJSON()['access-token']
+            let token = response.headers.toJSON() && response.headers.toJSON()['access-token']
 
-            if (id_token) {
-               this.id_token = id_token[0];
-               console.log(this.id_token);
+            if (token) {
+               this.token = token[0];
+               console.log('Token store as auth property.', this.token);
 
-               this.local.set('userData', JSON.parse(response['_body']) );
+               let currentUser = this._tokenService.currentUserData;
+               this.local.set('currentUser', currentUser).then((val) => {
+                  console.log('currentUser set in local storage.');
+               });
+
+               // console.log(response['_body']);
+               // console.log(JSON.parse(response['_body']))
+               // this.local.set('currentUser', JSON.parse(response['_body']) );
                return true;
             } else {
                return false;
@@ -77,11 +66,11 @@ export class AuthProvider {
          this._tokenService.signOut().subscribe(
             res => {
                console.log('auth response to log out: ', res),
-               this.local.remove('id_token').then((val) => {
-                  console.log('id_token: ', val)
+               this.local.remove('token').then((val) => {
+                  console.log('token: ', val)
                }),
-               this.local.remove('userData').then((val) => {
-                  console.log('userData: ', val)
+               this.local.remove('currentUser').then((val) => {
+                  console.log('currentUser: ', val)
                })
             }, err => {
                console.log('auth response to log out: ', err)

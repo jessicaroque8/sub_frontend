@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { UsersProvider } from '../../providers/users/users';
 import { User } from '../../models/user.model';
+import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -11,27 +12,23 @@ import { User } from '../../models/user.model';
 })
 export class AccountPage {
 
-   currentUser: any;
+   currentUser = new User();
+   pushLogin = LoginPage;
 
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
      public auth: AuthProvider,
-     public users: UsersProvider
+     public users: UsersProvider,
   ) {
-
+     this.users.getUser(this.auth.currentUser.id).subscribe( (res) => {
+        this.currentUser = res as User;
+        console.log(this.currentUser);
+     });
   }
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad AccountPage');
-      this.users.getUser(this.auth.userData.data.id).subscribe(
-         res => {
-            this.currentUser = res,
-            console.log(this.currentUser);
-         }, err => {
-            console.log(err)
-         }
-      );
   }
 
 }

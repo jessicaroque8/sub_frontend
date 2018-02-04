@@ -22,8 +22,6 @@ export class LoginPage {
      };
    output: string;
    pushPage: any;
-   loggedIn: boolean;
-   loading: boolean;
 
   constructor(
      public navCtrl: NavController,
@@ -43,7 +41,6 @@ export class LoginPage {
    }
 
   signIn(email, password) {
-     this.loading = true;
      this.auth.signIn(email, password).toPromise().then( (result) => {
         console.log(result);
         if (result === true) {
@@ -55,7 +52,6 @@ export class LoginPage {
         } else {
            console.log('Sign in fail.'),
            this.output = 'Invalid credentials. Please try again.';
-           this.loading = false
         }
      });
    }
