@@ -13,11 +13,10 @@ import { AccountPage } from '../account/account';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = LoginPage;
-  tab3Root = OpenPage;
-  tab4Root = ClosedPage;
-  tab5Root = PastPage;
-  tab6Root = AccountPage;
+  tab2Root = OpenPage;
+  tab3Root = ClosedPage;
+  tab4Root = PastPage;
+  tab5Root = AccountPage;
 
   constructor() {
      console.log('On TabsPage!!')
