@@ -16,11 +16,13 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { OpenPage } from '../pages/open/open';
 import { ClosedPage } from '../pages/closed/closed';
 import { PastPage } from '../pages/past/past';
+import { AccountPage } from '../pages/account/account';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { SubRequestsProvider } from '../providers/sub-requests/sub-requests';
+import { UsersProvider } from '../providers/users/users';
 
 const IonicPro = Pro.init('6200de52', {
   appVersion: "0.0.1"
@@ -55,7 +57,8 @@ export class MyErrorHandler implements ErrorHandler {
     TabsPage,
     OpenPage,
     ClosedPage,
-    PastPage
+    PastPage,
+    AccountPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,8 @@ export class MyErrorHandler implements ErrorHandler {
     TabsPage,
     OpenPage,
     ClosedPage,
-    PastPage
+    PastPage,
+    AccountPage
   ],
   providers: [
     StatusBar,
@@ -82,7 +86,8 @@ export class MyErrorHandler implements ErrorHandler {
     [{provide: ErrorHandler, useClass: IonicErrorHandler}],
     AuthProvider,
     Angular2TokenService,
-    SubRequestsProvider
+    SubRequestsProvider,
+    UsersProvider
   ]
 })
 

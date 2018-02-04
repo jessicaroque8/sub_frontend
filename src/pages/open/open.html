@@ -10,7 +10,7 @@
 <ion-content padding>
 
    <div padding>
-     <ion-segment [(ngModel)]="viewRequests">
+     <ion-segment [(ngModel)]="view">
        <ion-segment-button value="sent">
          Sent
        </ion-segment-button>
@@ -20,9 +20,10 @@
      </ion-segment>
    </div>
 
-   <div [ngSwitch]="viewRequests">
+   <div [ngSwitch]="view">
      <ion-list *ngSwitchCase="'sent'">
            <ion-item *ngFor="let request of sent">
+             <ion-avatar item-start><img src="{{ request.sender_img }}" alt="Sender avatar"/></ion-avatar>
               <h2>{{ request.class_name }}</h2>
 
               <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
@@ -32,6 +33,7 @@
 
      <ion-list *ngSwitchCase="'incoming'">
         <ion-item *ngFor="let request of incoming">
+           <ion-avatar item-start><img src="{{ request.sender_img }}" alt="Sender avatar"/></ion-avatar>
            <h2>{{ request.class_name }}</h2>
            <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
            <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>

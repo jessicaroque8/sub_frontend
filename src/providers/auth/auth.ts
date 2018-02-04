@@ -57,7 +57,7 @@ export class AuthProvider {
                res =>      {
                   let headers = res.headers.toJSON()
                   this.local.set('id_token', headers['access-token'].toString());
-                  this.local.set('userData', JSON.stringify(res['_body']));
+                  this.local.set('userData', JSON.parse(res['_body']));
                   observer.next('success')
                },
                err =>    {

@@ -9,6 +9,7 @@ export class SubRequest {
   note: string;
   created_at: string;
   updated_at: string;
+  sender_img: string;
 
   // sendees: Array<Sendee>;
 
