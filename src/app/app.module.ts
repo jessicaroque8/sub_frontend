@@ -17,6 +17,7 @@ import { OpenPage } from '../pages/open/open';
 import { ClosedPage } from '../pages/closed/closed';
 import { PastPage } from '../pages/past/past';
 import { AccountPage } from '../pages/account/account';
+import { ShowSubRequestPage } from '../pages/sub-request/show-sub-request/show-sub-request';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -58,7 +59,8 @@ export class MyErrorHandler implements ErrorHandler {
     OpenPage,
     ClosedPage,
     PastPage,
-    AccountPage
+    AccountPage,
+    ShowSubRequestPage
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,8 @@ export class MyErrorHandler implements ErrorHandler {
     OpenPage,
     ClosedPage,
     PastPage,
-    AccountPage
+    AccountPage,
+    ShowSubRequestPage
   ],
   providers: [
     StatusBar,

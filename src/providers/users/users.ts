@@ -10,10 +10,6 @@ export class UsersProvider {
     console.log('Hello UsersProvider Provider');
   }
 
-  loadUsers(scope: string) {
-      return this.http.get('http://localhost:3000/users');
-   }
-
    getUser(id) {
       return this.http.get('http://localhost:3000/users/' + id);
    }

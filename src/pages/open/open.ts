@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubRequestsProvider } from '../../providers/sub-requests/sub-requests';
 import { SubRequest } from '../../models/sub-request.model';
 import { UsersProvider } from '../../providers/users/users';
-
+import { ShowSubRequestPage } from '../sub-request/show-sub-request/show-sub-request';
 
 @IonicPage()
 @Component({
@@ -56,4 +56,11 @@ export class OpenPage {
          )
       };
    }
+
+   showRequest(id) {
+      this.navCtrl.push(ShowSubRequestPage, {
+         id: id
+      })
+   }
+
 }

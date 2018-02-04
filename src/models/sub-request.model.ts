@@ -12,6 +12,5 @@ export class SubRequest {
   sender_img: string;
 
   // sendees: Array<Sendee>;
-
-
+  
 }
