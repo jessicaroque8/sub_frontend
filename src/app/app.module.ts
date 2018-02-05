@@ -91,7 +91,7 @@ export class MyErrorHandler implements ErrorHandler {
     AuthProvider,
     Angular2TokenService,
     SubRequestsProvider,
-    UsersProvider
+    UsersProvider,
   ]
 })
 

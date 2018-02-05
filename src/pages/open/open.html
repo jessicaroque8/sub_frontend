@@ -32,7 +32,7 @@
      </ion-list>
 
      <ion-list *ngSwitchCase="'incoming'">
-        <ion-item *ngFor="let request of incoming">
+        <ion-item *ngFor="let request of incoming" (tap)="showRequest(request.id)">
            <ion-avatar item-start><img src="{{ request.sender_img }}" alt="Sender avatar"/></ion-avatar>
            <h2>{{ request.class_name }}</h2>
            <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>

@@ -18,10 +18,7 @@ export class AuthProvider {
   )   {
          console.log('Hello AuthProvider Provider');
 
-         this.local.get('token').then(val => {
-            this.token = val;
-            console.log(this.currentUser);
-          });
+         console.log(this.token);
 
          this.local.get('currentUser').then(val => {
             this.currentUser = val;
@@ -46,10 +43,6 @@ export class AuthProvider {
                this.local.set('currentUser', currentUser).then((val) => {
                   console.log('currentUser set in local storage.');
                });
-
-               // console.log(response['_body']);
-               // console.log(JSON.parse(response['_body']))
-               // this.local.set('currentUser', JSON.parse(response['_body']) );
                return true;
             } else {
                return false;
