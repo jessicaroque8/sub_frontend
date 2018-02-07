@@ -46,6 +46,25 @@ export class OpenPage {
       );
    }
 
+   ionViewWillEnter() {
+      this.sr.loadRequests('incomplete')
+        .subscribe(
+           requests => {
+              this.requests = requests,
+              this.sent = this.requests.sent;
+              this.incoming = this.requests.incoming,
+              console.log('sent: ', this.sent),
+              console.log('incoming: ', this.incoming);
+
+              // Get the sender images and assign to each SubRequest.
+              this.getSenderPics(this.sent);
+              this.getSenderPics(this.incoming);
+           }, err => {
+              console.log(err)
+           }
+        );
+   }
+
    getSenderPics(view) {
       for(let i in view) {
          this.users.getUser(view[i].user_id).subscribe(

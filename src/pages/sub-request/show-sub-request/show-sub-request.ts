@@ -134,6 +134,10 @@ export class ShowSubRequestPage {
           text: 'I\'m sure',
           handler: () => {
             console.log('I\'m sure clicked');
+            this.sr.deleteRequest(this.request_id).subscribe( val => {
+               console.log(val);
+            });
+            this.navCtrl.pop();
           }
         }
       ]
