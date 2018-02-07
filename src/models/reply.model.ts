@@ -1,5 +1,6 @@
 export class Reply {
-   value: number;
+   id: number;
+   value: string;
    note: string;
    sendee_id: number;
    sub_request_id: number;

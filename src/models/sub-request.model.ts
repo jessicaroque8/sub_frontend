@@ -1,8 +1,11 @@
-import { Sendee } from '/sendee.model'
+import { Sendee } from './sendee.model';
+import { User } from './user.model';
+import { Group } from './group.model';
+
 export class SubRequest {
   id: number;
-  user_id: number;
-  group_id: number;
+  user: User = new User();
+  group: Group = new Group();
   class_id_mb: number;
   class_name: string;
   start_date_time: string;
@@ -13,5 +16,5 @@ export class SubRequest {
   created_at: string;
   updated_at: string;
   sender_img: string;
-  sendees: Array<Sendee>;
+  sendees: Array<Sendee> = [];
 }

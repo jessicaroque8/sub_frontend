@@ -1,6 +1,7 @@
-import { Reply } from '/reply.model';
+import { Reply } from './reply.model';
 
 export class Sendee {
+   id: number;
    user_id: number;
    sub_request_id: number;
    sub: boolean;
@@ -8,7 +9,7 @@ export class Sendee {
    created_at: string;
    updated_at: string;
    reply: Reply;
-   img: string;
+   image: string;
    first_name: string;
    last_name: string;
 }

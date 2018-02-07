@@ -1,3 +1,99 @@
 page-show-sub-request {
 
+   // ion-grid {
+   //    height: 100%;
+   // }
+   //
+   ion-row {
+      padding: 0;
+   }
+
+   .col {
+      padding: 0px;
+   }
+
+   ion-row:nth-child(2) .col {
+      margin-top: -0.5em;
+   }
+
+   ion-col, sub {
+      text-align: center;
+   }
+
+   .item-ios ion-avatar img.sender-image {
+      // margin: auto;
+      width: 60px;
+      height: 60px;
+   }
+
+   .item-md ion-avatar img.sender-image {
+      // margin: auto;
+      width: 60px;
+      height: 60px;
+      border: 3px #222;
+   }
+
+   .item-ios h1 {
+      font-size: 2rem;
+      font-weight: bold;
+   }
+
+   .item-md h1 {
+      font-size: 2rem;
+      font-weight: bold;
+   }
+
+   .item-ios h2{
+      font-size: 1.3rem;
+      font-weight: semi-bold;
+   }
+
+   .item-md h2{
+      font-size: 1.3rem;
+      font-weight: semi-bold;
+   }
+
+   .item-ios h3 {
+      font-size: 1.75rem;
+      font-weight: bold;
+   }
+
+   .item-md h3 {
+      font-size: 1.5rem;
+   }
+
+   .item-ios h4 {
+      font-size: 1.2rem;
+      font-weight: semi-bold;
+   }
+
+   .item-md h4 {
+      font-size: 1.2rem;
+      font-weight: semi-bold;
+   }
+
+   .chips {
+      text-align: right;
+   }
+
+   .chip-label {
+      padding-left: 10px;
+      padding-right: 10px;
+   }
+
+   sub {
+      bottom: 0em;
+      font-size: 1rem;
+      color: #222;
+   }
+
+   .item-ios p {
+      font-size: 1.2rem;
+   }
+
+   .item-md p {
+      font-size: 1.2rem;
+   }
+
+
 }

@@ -61,7 +61,8 @@ export class OpenPage {
 
    showRequest(id) {
       this.navCtrl.push(ShowSubRequestPage, {
-         id: id
+         id: id,
+         view: this.view
       })
    }
 
