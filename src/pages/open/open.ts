@@ -5,6 +5,8 @@ import { SubRequest } from '../../models/sub-request.model';
 import { UsersProvider } from '../../providers/users/users';
 import { ShowSubRequestPage } from '../sub-request/show-sub-request/show-sub-request';
 import { User } from '../../models/user.model';
+import { LoadingController } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -13,6 +15,7 @@ import { User } from '../../models/user.model';
 })
 export class OpenPage {
 
+   loaded: boolean;
    view: string;
    requests: any;
    sent: Array<SubRequest> = [];
@@ -22,11 +25,18 @@ export class OpenPage {
      public navCtrl: NavController,
      public navParams: NavParams,
      public sr: SubRequestsProvider,
-     public users: UsersProvider
+     public users: UsersProvider,
+     public loadingCtrl: LoadingController
    ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpenPage');
+    this.loaded = false;
+    let loader = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        showBackdrop: true
+    });
+    loader.present();
     this.view = 'sent';
     this.sr.loadRequests('incomplete')
       .subscribe(
@@ -42,6 +52,9 @@ export class OpenPage {
             this.getSenderPics(this.incoming);
          }, err => {
             console.log(err)
+         }, () => {
+            this.loaded = true;
+            loader.dismiss();
          }
       );
    }
@@ -84,5 +97,6 @@ export class OpenPage {
          view: this.view
       })
    }
+
 
 }

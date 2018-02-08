@@ -40,6 +40,7 @@ export class AuthProvider {
                console.log('Token store as auth property.', this.token);
 
                let currentUser = this._tokenService.currentUserData;
+               this.currentUser = currentUser;
                this.local.set('currentUser', currentUser).then((val) => {
                   console.log('currentUser set in local storage.');
                });
@@ -51,6 +52,12 @@ export class AuthProvider {
       }
 
       logOut() {
+         let loader = this.loadingCtrl.create({
+             spinner: 'bubbles',
+             showBackdrop: true
+         });
+         loader.present();
+
          this._tokenService.signOut().subscribe(
             res => {
                console.log('auth response to log out: ', res),
@@ -62,6 +69,8 @@ export class AuthProvider {
                })
             }, err => {
                console.log('auth response to log out: ', err)
+            }, () => {
+               loader.dismiss();
             }
          );
       }

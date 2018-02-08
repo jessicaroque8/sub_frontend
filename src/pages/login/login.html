@@ -7,7 +7,9 @@
 
 
 <ion-content>
-   
+
+   <img src="../../assets/imgs/login_header.jpg" />
+
    <div *ngIf="output">
       {{ output }}
    </div>
@@ -23,5 +25,12 @@
       Log In
     </button>
   </form>
+
+  <div class="chips">
+     <ion-chip color="primary" [navPush]='pushCreate'>
+       <ion-label>Or create an account.</ion-label>
+     </ion-chip>
+  </div>
+
 
 </ion-content>
