@@ -7,6 +7,7 @@ import { UsersProvider } from '../../../providers/users/users';
 import { Observable } from 'rxjs';
 import { ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -27,6 +28,7 @@ export class ShowSubRequestPage {
    showMaybe: boolean = false;
    showDecline: boolean = false;
    showNoReply: boolean = false;
+   loaded: boolean;
 
   constructor(
      public navCtrl: NavController,
@@ -34,17 +36,27 @@ export class ShowSubRequestPage {
      public sr: SubRequestsProvider,
      public users: UsersProvider,
      public actionSheetCtrl: ActionSheetController,
-     public alertCtrl: AlertController
+     public alertCtrl: AlertController,
+     public loadingCtrl: LoadingController
   ) {}
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad ShowSubRequestPage');
+      this.loaded = false;
+      let loader = this.loadingCtrl.create({
+         spinner: 'dots',
+         showBackdrop: false
+      });
+      loader.present();
       this.view = this.navParams.get('view');
       this.request_id = this.navParams.get('id');
       this.sr.loadRequest(this.request_id).subscribe( request => {
          this.request = request;
          console.log(this.request);
          this.sortSendeesByReplyValue();
+         loader.dismiss().then( result => {
+            this.loaded = true;
+         });
       });
    }
 

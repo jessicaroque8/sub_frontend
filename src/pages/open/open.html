@@ -23,24 +23,25 @@
 
       <div [ngSwitch]="view">
         <ion-list *ngSwitchCase="'sent'">
-              <ion-item *ngFor="let request of sent" (tap)="showRequest(request['id'])">
-                <ion-avatar item-start><img src="{{ request['sender_img'] }}" alt="Sender avatar"/></ion-avatar>
-                <h2>{{ request['class_name'] }}</h2>
-                <h5>{{ request['start_date_time'] | date: 'E, M/d/yy' }}</h5>
-                <h5>{{ request['start_date_time'] | date: 'h:mm a'}} - {{request['end_date_time'] | date: 'h:mm a'}}</h5>
+              <ion-item *ngFor="let request of sent" (tap)="showRequest(request.id)">
+                <ion-avatar item-start><img src="{{ request.sender_img }}" alt="Sender avatar"/></ion-avatar>
+                 <h2>{{ request.class_name }}</h2>
+
+                 <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
+                 <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
               </ion-item>
         </ion-list>
 
         <ion-list *ngSwitchCase="'incoming'">
-           <ion-item *ngFor="let request of incoming" (tap)="showRequest(request['id'])">
-              <ion-avatar item-start><img src="{{ request['sender_img'] }}" alt="Sender avatar"/></ion-avatar>
-              <h2>{{ request['class_name'] }}</h2>
-              <h5>{{ request['start_date_time'] | date: 'E, M/d/yy' }}</h5>
-              <h5>{{ request['start_date_time'] | date: 'h:mm a'}} - {{request['end_date_time'] | date: 'h:mm a'}}</h5>
+           <ion-item *ngFor="let request of incoming" (tap)="showRequest(request.id)">
+              <ion-avatar item-start><img src="{{ request.sender_img }}" alt="Sender avatar"/></ion-avatar>
+              <h2>{{ request.class_name }}</h2>
+              <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
+              <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
            </ion-item>
         </ion-list>
       </div>
-
    </div>
+
 
 </ion-content>

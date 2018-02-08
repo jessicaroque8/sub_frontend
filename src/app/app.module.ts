@@ -18,7 +18,6 @@ import { ClosedPage } from '../pages/closed/closed';
 import { PastPage } from '../pages/past/past';
 import { AccountPage } from '../pages/account/account';
 import { ShowSubRequestPage } from '../pages/sub-request/show-sub-request/show-sub-request';
-import { CreateAccountPage } from '../pages/create-account/create-account';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,7 +25,6 @@ import { AuthProvider } from '../providers/auth/auth';
 import { SubRequestsProvider } from '../providers/sub-requests/sub-requests';
 import { UsersProvider } from '../providers/users/users';
 import { LoadingController } from 'ionic-angular';
-import { MindBodyProvider } from '../providers/mind-body/mind-body';
 
 const IonicPro = Pro.init('6200de52', {
   appVersion: "0.0.1"
@@ -63,8 +61,7 @@ export class MyErrorHandler implements ErrorHandler {
     ClosedPage,
     PastPage,
     AccountPage,
-    ShowSubRequestPage,
-    CreateAccountPage
+    ShowSubRequestPage
   ],
   imports: [
     BrowserModule,
@@ -84,8 +81,7 @@ export class MyErrorHandler implements ErrorHandler {
     ClosedPage,
     PastPage,
     AccountPage,
-    ShowSubRequestPage,
-    CreateAccountPage
+    ShowSubRequestPage
   ],
   providers: [
     StatusBar,
@@ -96,7 +92,6 @@ export class MyErrorHandler implements ErrorHandler {
     Angular2TokenService,
     SubRequestsProvider,
     UsersProvider,
-    MindBodyProvider,
   ]
 })
 

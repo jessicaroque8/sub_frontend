@@ -7,7 +7,6 @@ import { ShowSubRequestPage } from '../sub-request/show-sub-request/show-sub-req
 import { User } from '../../models/user.model';
 import { LoadingController } from 'ionic-angular';
 
-
 @IonicPage()
 @Component({
   selector: 'page-open',
@@ -15,11 +14,11 @@ import { LoadingController } from 'ionic-angular';
 })
 export class OpenPage {
 
-   loaded: boolean;
    view: string;
    requests: any;
    sent: Array<SubRequest> = [];
    incoming: Array<SubRequest> = [];
+   loaded: boolean;
 
   constructor(
      public navCtrl: NavController,
@@ -31,13 +30,13 @@ export class OpenPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpenPage');
+    this.view = 'sent';
     this.loaded = false;
     let loader = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        showBackdrop: true
+       spinner: 'dots',
+       showBackdrop: false
     });
     loader.present();
-    this.view = 'sent';
     this.sr.loadRequests('incomplete')
       .subscribe(
          requests => {
@@ -50,16 +49,23 @@ export class OpenPage {
             // Get the sender images and assign to each SubRequest.
             this.getSenderPics(this.sent);
             this.getSenderPics(this.incoming);
+            loader.dismiss().then( result => {
+               this.loaded = true;
+            });
          }, err => {
             console.log(err)
-         }, () => {
-            this.loaded = true;
-            loader.dismiss();
          }
       );
    }
 
    ionViewWillEnter() {
+      this.loaded = false;
+      let loader = this.loadingCtrl.create({
+          spinner: 'dots',
+          showBackdrop: false
+      });
+      loader.present();
+
       this.sr.loadRequests('incomplete')
         .subscribe(
            requests => {
@@ -72,6 +78,8 @@ export class OpenPage {
               // Get the sender images and assign to each SubRequest.
               this.getSenderPics(this.sent);
               this.getSenderPics(this.incoming);
+              loader.dismiss();
+              this.loaded = true;
            }, err => {
               console.log(err)
            }
@@ -97,6 +105,5 @@ export class OpenPage {
          view: this.view
       })
    }
-
 
 }
