@@ -4,6 +4,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { UsersProvider } from '../../providers/users/users';
 import { User } from '../../models/user.model';
 import { LoginPage } from '../login/login';
+import { LoadingController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -20,15 +22,44 @@ export class AccountPage {
      public navParams: NavParams,
      public auth: AuthProvider,
      public users: UsersProvider,
-  ) {
-     this.users.getUser(this.auth.currentUser.id).subscribe( (res) => {
-        this.currentUser = res as User;
-        console.log(this.currentUser);
-     });
-  }
+     public loadingCtrl: LoadingController,
+     public local: Storage
+  ) {}
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad AccountPage');
+      let loader = this.loadingCtrl.create({
+         spinner: 'dots',
+         showBackdrop: false
+      });
+      loader.present();
+
+      if (this.auth.currentUser) {
+         this.users.getUser(this.auth.currentUser.id).subscribe( (res) => {
+            this.currentUser = res as User;
+            console.log(this.currentUser);
+            loader.dismiss();
+         });
+      } else {
+         this.local.get('currentUser').then(currentUser => {
+            this.users.getUser(currentUser.id).subscribe( (res) => {
+               this.currentUser = res as User;
+               console.log(this.currentUser);
+               loader.dismiss();
+            });
+         });
+      }
+  }
+
+  logOut() {
+     let loader = this.loadingCtrl.create({
+        spinner: 'dots',
+        showBackdrop: false
+     });
+     loader.present();
+     this.auth.logOut();
+     loader.dismiss();
+     this.navCtrl.setRoot(LoginPage);
   }
 
 }

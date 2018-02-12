@@ -18,7 +18,10 @@ export class AuthProvider {
   )   {
          console.log('Hello AuthProvider Provider');
 
-         console.log(this.token);
+         this.local.get('token').then(val => {
+            this.token = val;
+            console.log(this.token);
+         });
 
          this.local.get('currentUser').then(val => {
             this.currentUser = val;
@@ -40,7 +43,8 @@ export class AuthProvider {
                console.log('Token store as auth property.', this.token);
 
                let currentUser = this._tokenService.currentUserData;
-               this.currentUser = currentUser
+               this.currentUser = currentUser;
+               console.log(this.currentUser.id);
 
                this.local.set('currentUser', currentUser).then((val) => {
                   console.log('currentUser set in local storage.');
@@ -53,19 +57,25 @@ export class AuthProvider {
       }
 
       logOut() {
-         this._tokenService.signOut().subscribe(
-            res => {
-               console.log('auth response to log out: ', res),
+         console.log('in log out')
+         this._tokenService.signOut().toPromise().then( result => {
+               console.log('auth response to log out: ', result),
                this.local.remove('token').then((val) => {
-                  console.log('token: ', val)
-               }),
+                  console.log('local token: ', val),
+                  this.token = null;
+                  console.log('property token: ', this.token)
+               });
                this.local.remove('currentUser').then((val) => {
-                  console.log('currentUser: ', val)
-               })
-            }, err => {
-               console.log('auth response to log out: ', err)
+                  console.log('local currentUser: ', val),
+                  this.currentUser = null;
+                  console.log('property currentUser: ', this.currentUser)
+               });
             }
-         );
+         ).catch( err => {
+            console.log(err)
+         });
       }
+
+
 
 }

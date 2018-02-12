@@ -18,7 +18,7 @@ export class OpenPage {
    requests: any;
    sent: Array<SubRequest> = [];
    incoming: Array<SubRequest> = [];
-   loaded: boolean;
+   loaded: boolean = false;
 
   constructor(
      public navCtrl: NavController,
@@ -31,7 +31,6 @@ export class OpenPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpenPage');
     this.view = 'sent';
-    this.loaded = false;
     let loader = this.loadingCtrl.create({
        spinner: 'dots',
        showBackdrop: false
@@ -103,7 +102,7 @@ export class OpenPage {
       this.navCtrl.push(ShowSubRequestPage, {
          id: id,
          view: this.view
-      })
+      });
    }
 
 }
