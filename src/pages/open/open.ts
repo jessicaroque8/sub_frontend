@@ -57,7 +57,7 @@ export class OpenPage {
       );
    }
 
-   ionViewWillEnter() {
+   ionViewDidEnter() {
       this.loaded = false;
       let loader = this.loadingCtrl.create({
           spinner: 'dots',
@@ -94,8 +94,8 @@ export class OpenPage {
             }, err => {
                console.log(err)
             }
-         )
-      };
+         );
+      }
    }
 
    showRequest(id) {
