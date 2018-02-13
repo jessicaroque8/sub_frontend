@@ -8,6 +8,8 @@ import { AuthProvider } from '../../providers/auth/auth'
 
 import { LoadingController } from 'ionic-angular';
 
+import { LinkMindBodyPage } from '../link-mind-body/link-mind-body';
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -21,7 +23,7 @@ export class LoginPage {
         password: ''
      };
    output: string;
-   pushPage: any;
+   pushLinkMindBody = LinkMindBodyPage;
 
   constructor(
      public navCtrl: NavController,
@@ -30,7 +32,6 @@ export class LoginPage {
      public _tokenService: Angular2TokenService,
      public loadingCtrl: LoadingController
    ) {
-      this.pushPage = TabsPage;
   }
 
   ionViewDidLoad() {

@@ -86,10 +86,11 @@ page-show-sub-request {
       font-size: 1.2rem;
    }
 
-   .segment-ios .segment-button {
-      height: 4rem;
-      line-height: 1.5rem;
-   }
+   $segment-button-ios-height: 4rem;
+   $segment-button-md-height: 4rem;
+
+   $segment-button-md-icon-line-height: 1.5rem;
+   $segment-button-ios-icon-line-height: 1.5rem;
 
    .segment-ios .segment-button .show-replies-head {
       margin-top: 5px;

@@ -7,7 +7,7 @@
 
 
 <ion-content>
-   
+
    <div *ngIf="output">
       {{ output }}
    </div>
@@ -23,5 +23,9 @@
       Log In
     </button>
   </form>
+
+  <ion-chip color="primary" [navPush]="pushLinkMindBody">
+    <ion-label>Or create an account.</ion-label>
+  </ion-chip>
 
 </ion-content>

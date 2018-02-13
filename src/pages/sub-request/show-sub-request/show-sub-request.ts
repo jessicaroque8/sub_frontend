@@ -23,13 +23,8 @@ export class ShowSubRequestPage {
    sendeesMaybe: Array<Sendee> = [];
    sendeesDecline: Array<Sendee> = [];
    sendeesNoReply: Array<Sendee> = [];
-   // all, agree, maybe, decline, no_reply
+   // repliesToShow: all, agree, maybe, decline, no_reply
    repliesToShow: string;
-   showAll: boolean = true;
-   showAgree: boolean = false;
-   showMaybe: boolean = false;
-   showDecline: boolean = false;
-   showNoReply: boolean = false;
    loaded: boolean;
 
   constructor(

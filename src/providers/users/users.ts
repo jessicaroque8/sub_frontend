@@ -14,4 +14,8 @@ export class UsersProvider {
       return this.http.get('http://localhost:3000/users/' + id);
    }
 
+   linkToMindBody(mbData) {
+      return this.http.post('http://localhost:3000/link_to_mb', mbData);
+   }
+
 }
