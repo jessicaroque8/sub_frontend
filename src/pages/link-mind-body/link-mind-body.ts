@@ -51,7 +51,7 @@ export class LinkMindBodyPage {
      });
      loader.present();
      this.users.linkToMindBody(this.input).subscribe(response => {
-        if (response.id) {
+        if (response['id']) {
            loader.dismiss().then( result => {
              this.navCtrl.push(CreateAccountPage, {
                staff_id_mb: response['id'],

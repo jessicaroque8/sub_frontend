@@ -9,6 +9,7 @@ import { AuthProvider } from '../../providers/auth/auth'
 import { LoadingController } from 'ionic-angular';
 
 import { LinkMindBodyPage } from '../link-mind-body/link-mind-body';
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -22,15 +23,15 @@ export class LoginPage {
         email: '',
         password: ''
      };
-   output: string;
-   pushLinkMindBody = LinkMindBodyPage;
+   pushCreateAccount = LinkMindBodyPage;
 
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
      public auth: AuthProvider,
      public _tokenService: Angular2TokenService,
-     public loadingCtrl: LoadingController
+     public loadingCtrl: LoadingController,
+     private alertCtrl: AlertController
    ) {
   }
 
@@ -52,14 +53,28 @@ export class LoginPage {
         console.log(result);
         if (result === true) {
            console.log('Sign in success.'),
-           loader.dismiss();
-            this.navCtrl.push(TabsPage)
+           loader.dismiss().then(res => {
+             this.navCtrl.push(TabsPage)
+          });
         } else {
            console.log('Sign in fail.'),
-           this.output = 'Invalid credentials. Please try again.';
-        }
-     });
+           loader.dismiss().then( result => {
+             let alert = this.alertCtrl.create({
+               title: 'We couldn\'t find an account with that email/password combination. Please try again.',
+               buttons: [{
+                 text: 'Ok',
+                 handler: () => {
+
+                   this.clearInput().then(res => {
+                      alert.dismiss();
+                   });
+                   return false;
+                 }
+               }]
+             });
+             alert.present();
+            });
+         }
+      });
    }
-
-
 }

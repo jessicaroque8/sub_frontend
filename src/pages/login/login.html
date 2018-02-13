@@ -1,16 +1,11 @@
 <ion-header>
 
-  <ion-navbar>
-  </ion-navbar>
+  <img src="../../assets/imgs/login_header.jpg" alt="Sub" />
 
 </ion-header>
 
 
 <ion-content>
-
-   <div *ngIf="output">
-      {{ output }}
-   </div>
 
    <form (submit)="signIn(loginData.email, loginData.password)">
     <ion-item>
@@ -24,7 +19,7 @@
     </button>
   </form>
 
-  <ion-chip color="primary" [navPush]="pushLinkMindBody">
+  <ion-chip color="primary" [navPush]="pushCreateAccount">
     <ion-label>Or create an account.</ion-label>
   </ion-chip>
 
