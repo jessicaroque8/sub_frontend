@@ -12,6 +12,8 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class SubRequestsProvider {
 
+   currentUser = null;
+
   constructor(
      public http: HttpClient,
      public auth: AuthProvider,
@@ -19,18 +21,18 @@ export class SubRequestsProvider {
      public local: Storage
   ) {
       console.log('Hello SubRequestsProvider');
+      if (this.auth.currentUser) {
+         this.currentUser = this.auth.currentUser
+      } else {
+         this.local.get('currentUser').then(currentUser => {
+            this.currentUser = currentUser
+         });
+      }
     }
 
 // For index views. Returns an Observable.
   loadRequests(scope: string) {
-      if (this.auth.currentUser) {
-         return this.http.get('http://localhost:3000/sub_requests/', {params: {scope: scope, user_id: this.auth.currentUser.id} });
-      } else {
-         this.local.get('currentUser').then(currentUser => {
-            return this.http.get('http://localhost:3000/sub_requests/', {params: {scope: scope, user_id: currentUser.id} } );
-         });
-      }
-      console.log('in loadRequests');
+      return this.http.get('http://localhost:3000/sub_requests/', {params: {scope: scope, user_id: this.currentUser.id} });
    }
 
 // Returns an Observable. Includes User, Group, Sendee, Sendee Reply, Sendee first_name, Sendee last_name, Sendee image.

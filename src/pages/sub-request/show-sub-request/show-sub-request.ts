@@ -23,6 +23,8 @@ export class ShowSubRequestPage {
    sendeesMaybe: Array<Sendee> = [];
    sendeesDecline: Array<Sendee> = [];
    sendeesNoReply: Array<Sendee> = [];
+   // all, agree, maybe, decline, no_reply
+   repliesToShow: string;
    showAll: boolean = true;
    showAgree: boolean = false;
    showMaybe: boolean = false;
@@ -50,6 +52,7 @@ export class ShowSubRequestPage {
       loader.present();
       this.view = this.navParams.get('view');
       this.request_id = this.navParams.get('id');
+      this.repliesToShow = 'all';
       this.sr.loadRequest(this.request_id).subscribe( request => {
          this.request = request;
          console.log(this.request);
@@ -80,26 +83,6 @@ export class ShowSubRequestPage {
       console.log(this.sendeesMaybe);
       console.log(this.sendeesDecline);
       console.log(this.sendeesNoReply);
-   }
-
-   expandSendeeReplies(reply_value) {
-      if (reply_value == 'agree') {
-         this.showAgree = !this.showAgree;
-         this.showAll = !this.showAll;
-
-      } else if (reply_value == 'maybe') {
-         this.showMaybe = !this.showMaybe;
-         this.showAll = !this.showAll;
-
-      } else if (reply_value == 'decline') {
-         this.showDecline = !this.showDecline;
-         this.showAll = !this.showAll;
-
-      } else if (reply_value == 'no_reply') {
-         this.showNoReply = !this.showNoReply;
-         this.showAll = !this.showAll;
-
-      }
    }
 
    presentActionSheet() {

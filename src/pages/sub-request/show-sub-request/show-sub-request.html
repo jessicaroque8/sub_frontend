@@ -25,72 +25,71 @@
                </ion-item>
             </ion-row>
             <ion-row>
-               <ion-item>
+               <ion-item no-lines>
                   <h4>{{ request['start_date_time'] | date: 'EEEE, MMMM d, y' }}</h4>
                   <h4>{{ request['start_date_time'] | date: 'h:mm a' }} - {{ request['end_date_time'] | date: 'h:mm a' }}</h4>
                   <p>
                      {{ request.note }}
                   </p>
                   <div class="chips">
-                     <ion-chip color="danger">
+                     <ion-chip *ngIf="request.awaiting_confirm" color="danger">
                         <span class="chip-label">
                            Awaiting Confirmation
                         </span>
                      </ion-chip>
-                     <!-- <ion-chip color="secondary">
+                     <ion-chip *ngIf="request.closed" color="secondary">
                         <span class="chip-label">
                            Closed
                         </span>
-                     </ion-chip> -->
+                     </ion-chip>
                   </div>
                </ion-item>
          </ion-row>
          <!-- End Header -->
-   <!-- Reply Bar -->
 
-         <ion-item>
-            <ion-row justify-content-center>
-               <ion-col (tap)="expandSendeeReplies('agree')" col-3>
-                  <h3 ion-text color="primary">{{ sendeesAgree.length }}</h3>
-               </ion-col>
-               <ion-col (tap)="expandSendeeReplies('maybe')" col-3>
-                  <h3 ion-text color="primary">{{ sendeesMaybe.length }}</h3>
-               </ion-col>
-               <ion-col (tap)="expandSendeeReplies('decline')" col-3>
-                  <h3 ion-text color="primary">{{ sendeesDecline.length }}</h3>
-               </ion-col>
-               <ion-col (tap)="expandSendeeReplies('no_reply')" col-3>
-                  <h3 ion-text color="primary">{{ sendeesNoReply.length }}</h3>
-               </ion-col>
-               <ion-col (tap)="expandSendeeReplies('agree')" col-3 align-self-center>
-                  <sub ion-text>Agree</sub>
-               </ion-col>
-               <ion-col (tap)="expandSendeeReplies('maybe')" col-3 align-self-center>
-                  <sub ion-text>Maybe</sub>
-               </ion-col>
-               <ion-col (tap)="expandSendeeReplies('decline')" col-3 align-self-center>
-                  <sub ion-text>Decline</sub>
-               </ion-col>
-               <ion-col (tap)="expandSendeeReplies('no_reply')" col-3 align-self-center>
-                  <sub ion-text>No Reply</sub>
-               </ion-col>
-            </ion-row>
-         </ion-item>
+         <!--  Filter Bar  -->
+         <ion-row>
+           <ion-segment [(ngModel)]="repliesToShow">
+             <ion-segment-button value="all">
+               <span class="show-replies-head">{{ request.sendees.length }}</span>
+               <span class="show-replies-sub">All</span>
+             </ion-segment-button>
+             <ion-segment-button value="agree">
+               <span class="show-replies-head">{{ sendeesAgree.length }}</span>
+               <span class="show-replies-sub">Agree</span>
+             </ion-segment-button>
+             <ion-segment-button value="maybe">
+                <span class="show-replies-head">{{ sendeesMaybe.length }}</span>
+               <span class="show-replies-sub">Maybe</span>
+             </ion-segment-button>
+             <ion-segment-button value="decline">
+               <span class="show-replies-head">{{ sendeesDecline.length }}</span>
+               <span class="show-replies-sub">Decline</span>
+             </ion-segment-button>
+             <ion-segment-button value="no_reply">
+               <span class="show-replies-head">{{ sendeesNoReply.length }}</span>
+               <span class="show-replies-sub">No Reply</span>
+             </ion-segment-button>
+           </ion-segment>
+        </ion-row>
+        <!--  Filter Bar End -->
 
-         <ion-row *ngIf="showAll == true">
+        <!-- Replies -->
+         <ion-row *ngIf=" repliesToShow == 'all' ">
             <ion-item *ngFor="let sendee of request.sendees">
                   <ion-avatar item-end>
                      <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
                   </ion-avatar>
                   <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
                   <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
+                  <h4>{{ sendee.reply.value }}</h4>
                   <p>
-                     Lalala testing size. {{ sendee.reply['note']}}
+                     {{ sendee.reply['note']}}
                   </p>
             </ion-item>
          </ion-row>
 
-            <ion-row *ngIf="showAgree == true">
+            <ion-row *ngIf=" repliesToShow == 'agree' ">
                   <ion-item *ngFor="let sendee of sendeesAgree">
                         <ion-avatar item-end>
                            <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
@@ -98,12 +97,17 @@
                         <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
                         <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
                         <p>
-                           Lalala testing size. {{ sendee.reply['note']}}
+                           {{ sendee.reply['note']}}
                         </p>
+                  </ion-item>
+                  <ion-item *ngIf="(repliesToShow == 'agree') && (sendeesAgree.length == 0)">
+                     <p>
+                        No one replied "agree" yet.
+                     </p>
                   </ion-item>
             </ion-row>
 
-            <ion-row *ngIf="showMaybe == true">
+            <ion-row *ngIf=" repliesToShow == 'maybe' ">
                <ion-item *ngFor="let sendee of sendeesMaybe">
                   <ion-avatar item-end>
                      <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
@@ -111,12 +115,17 @@
                   <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
                   <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
                   <p>
-                     Lalala testing size. {{ sendee.reply['note']}}
+                     {{ sendee.reply['note']}}
+                  </p>
+               </ion-item>
+               <ion-item *ngIf="(repliesToShow == 'maybe') && (sendeesMaybe.length == 0)">
+                  <p>
+                     No one replied "maybe" yet.
                   </p>
                </ion-item>
             </ion-row>
 
-            <ion-row *ngIf="showDecline == true">
+            <ion-row *ngIf=" repliesToShow == 'decline' ">
                <ion-item *ngFor="let sendee of sendeesDecline">
                   <ion-avatar item-end>
                      <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
@@ -124,23 +133,30 @@
                   <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
                   <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
                   <p>
-                     Lalala testing size. {{ sendee.reply['note']}}
+                     {{ sendee.reply['note']}}
+                  </p>
+               </ion-item>
+               <ion-item *ngIf="(repliesToShow == 'decline') && (sendeesDecline.length == 0)">
+                  <p>
+                     No one replied "decline" yet.
                   </p>
                </ion-item>
             </ion-row>
 
-            <ion-row *ngIf="showNoReply == true">
+            <ion-row *ngIf=" repliesToShow == 'no_reply' ">
                <ion-item *ngFor="let sendee of sendeesNoReply" no-lines>
                   <ion-avatar item-end>
                      <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
                   </ion-avatar>
                   <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
-                  <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
+               </ion-item>
+               <ion-item *ngIf="(repliesToShow == 'no_reply') && (sendeesNoReply.length == 0)">
                   <p>
-                     Lalala testing size. {{ sendee.reply['note']}}
+                     Everyone has replied to this request.
                   </p>
                </ion-item>
             </ion-row>
+            <!-- Replies End -->
 
    </ion-grid>
 </ion-content>

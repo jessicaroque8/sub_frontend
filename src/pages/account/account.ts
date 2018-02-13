@@ -14,6 +14,7 @@ import { Storage } from '@ionic/storage';
 })
 export class AccountPage {
 
+   loaded: boolean = false;
    currentUser = new User();
    pushLogin = LoginPage;
 
@@ -38,18 +39,22 @@ export class AccountPage {
          this.users.getUser(this.auth.currentUser.id).subscribe( (res) => {
             this.currentUser = res as User;
             console.log(this.currentUser);
-            loader.dismiss();
+            loader.dismiss().then(res => {
+               this.loaded = true
+            });
          });
       } else {
          this.local.get('currentUser').then(currentUser => {
             this.users.getUser(currentUser.id).subscribe( (res) => {
                this.currentUser = res as User;
                console.log(this.currentUser);
-               loader.dismiss();
+               loader.dismiss().then(res => {
+                  this.loaded = true
+               });
             });
          });
       }
-  }
+   }
 
   logOut() {
      let loader = this.loadingCtrl.create({

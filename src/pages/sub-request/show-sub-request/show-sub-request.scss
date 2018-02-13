@@ -53,15 +53,6 @@ page-show-sub-request {
       font-weight: semi-bold;
    }
 
-   .item-ios h3 {
-      font-size: 1.75rem;
-      font-weight: bold;
-   }
-
-   .item-md h3 {
-      font-size: 1.5rem;
-   }
-
    .item-ios h4 {
       font-size: 1.2rem;
       font-weight: semi-bold;
@@ -93,6 +84,23 @@ page-show-sub-request {
 
    .item-md p {
       font-size: 1.2rem;
+   }
+
+   .segment-ios .segment-button {
+      height: 4rem;
+      line-height: 1.5rem;
+   }
+
+   .segment-ios .segment-button .show-replies-head {
+      margin-top: 5px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: block;
+   }
+
+   .segment-ios .segment-button .show-replies-sub {
+      font-size: 0.5rem;
+      display:block;
    }
 
 

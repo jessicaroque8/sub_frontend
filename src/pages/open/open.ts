@@ -31,30 +31,6 @@ export class OpenPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpenPage');
     this.view = 'sent';
-    let loader = this.loadingCtrl.create({
-       spinner: 'dots',
-       showBackdrop: false
-    });
-    loader.present();
-    this.sr.loadRequests('incomplete')
-      .subscribe(
-         requests => {
-            this.requests = requests,
-            this.sent = this.requests.sent;
-            this.incoming = this.requests.incoming,
-            console.log('sent: ', this.sent),
-            console.log('incoming: ', this.incoming);
-
-            // Get the sender images and assign to each SubRequest.
-            this.getSenderPics(this.sent);
-            this.getSenderPics(this.incoming);
-            loader.dismiss().then( result => {
-               this.loaded = true;
-            });
-         }, err => {
-            console.log(err)
-         }
-      );
    }
 
    ionViewDidEnter() {
@@ -77,8 +53,9 @@ export class OpenPage {
               // Get the sender images and assign to each SubRequest.
               this.getSenderPics(this.sent);
               this.getSenderPics(this.incoming);
-              loader.dismiss();
-              this.loaded = true;
+              loader.dismiss().then(res => {
+                 this.loaded = true
+              });
            }, err => {
               console.log(err)
            }

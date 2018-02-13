@@ -8,35 +8,37 @@
 
 
 <ion-content padding>
-   <ion-list>
-     <ion-item class="no-top">
-         <ion-avatar>
-            <img src="{{ currentUser.image }}">
-         </ion-avatar>
-     </ion-item>
-     <ion-item>
-        <ion-label><strong>First Name</strong></ion-label>
-        <ion-input type="text" value="{{ currentUser.first_name }}"></ion-input>
-     </ion-item>
-     <ion-item>
-       <ion-label><strong>Last Name</strong></ion-label>
-       <ion-input type="text" value="{{ currentUser.last_name }}"></ion-input>
-     </ion-item>
+   <div *ngIf="loaded == true">
+      <ion-list>
+        <ion-item class="no-top">
+            <ion-avatar>
+               <img src="{{ currentUser.image }}">
+            </ion-avatar>
+        </ion-item>
+        <ion-item>
+           <ion-label><strong>First Name</strong></ion-label>
+           <ion-input type="text" value="{{ currentUser.first_name }}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Last Name</strong></ion-label>
+          <ion-input type="text" value="{{ currentUser.last_name }}"></ion-input>
+        </ion-item>
 
-     <ion-item>
-        <ion-label><strong>Email</strong></ion-label>
-        <ion-input type="text" value="{{ currentUser.email }}"></ion-input>
-     </ion-item>
+        <ion-item>
+           <ion-label><strong>Email</strong></ion-label>
+           <ion-input type="text" value="{{ currentUser.email }}"></ion-input>
+        </ion-item>
 
-     <ion-item *ngIf="currentUser.staff_id_mb != '' || null">
-        <ion-icon name="checkmark-circle"></ion-icon>
-        <span>Connected to MINDBODY.</span>
-     </ion-item>
-     <ion-item *ngIf="currentUser.staff_id_mb == '' || null">
-        Your account is not connected to MINDBODY Online and you aren't able to make or send requests. Tap here to connect.
-     </ion-item>
-   </ion-list>
+        <ion-item *ngIf="currentUser.staff_id_mb != '' || null">
+           <ion-icon name="checkmark-circle"></ion-icon>
+           <span>Connected to MINDBODY.</span>
+        </ion-item>
+        <ion-item *ngIf="currentUser.staff_id_mb == '' || null">
+           Your account is not connected to MINDBODY Online and you aren't able to make or send requests. Tap here to connect.
+        </ion-item>
+      </ion-list>
 
-   <span (tap)="logOut()" [navPush]='pushLogin'><ion-icon name="log-out"></ion-icon>Log Out</span>
+      <span (tap)="logOut()" [navPush]='pushLogin'><ion-icon name="log-out"></ion-icon>Log Out</span>
+   </div>
 
 </ion-content>
