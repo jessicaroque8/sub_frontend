@@ -37,7 +37,8 @@ export class CreateAccountPage {
       "provider": "email",
       "first_name": "",
       "last_name": "",
-      "staff_id_mb": ""
+      "staff_id_mb": "",
+      "image": ""
    }
 
   constructor(

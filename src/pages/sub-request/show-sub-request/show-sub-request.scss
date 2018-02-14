@@ -86,11 +86,15 @@ page-show-sub-request {
       font-size: 1.2rem;
    }
 
-   $segment-button-ios-height: 4rem;
-   $segment-button-md-height: 4rem;
+   .segment-ios .segment-button {
+      height: 4rem;
+      line-height: 1.5rem;
+   }
 
-   $segment-button-md-icon-line-height: 1.5rem;
-   $segment-button-ios-icon-line-height: 1.5rem;
+   .segment-md .segment-button {
+      height: 4rem;
+      line-height: 1.5rem;
+   }
 
    .segment-ios .segment-button .show-replies-head {
       margin-top: 5px;
@@ -99,7 +103,19 @@ page-show-sub-request {
       display: block;
    }
 
+   .segment-md .segment-button .show-replies-head {
+      margin-top: 5px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: block;
+   }
+
    .segment-ios .segment-button .show-replies-sub {
+      font-size: 0.5rem;
+      display:block;
+   }
+
+   .segment-md .segment-button .show-replies-sub {
       font-size: 0.5rem;
       display:block;
    }

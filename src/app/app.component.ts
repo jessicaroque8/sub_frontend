@@ -30,7 +30,14 @@ export class MyApp {
     });
 
     this._tokenService.init({
-      apiBase: 'http://localhost:3000'
+      apiBase: 'http://localhost:3000',
+      globalOptions: {
+         headers: {
+                'Content-Type':     'application/json',
+                'Accept':           'application/json',
+                // 'Access-Control-Allow-Origin': 'Content-Type'
+            }
+      }
     });
   }
 
