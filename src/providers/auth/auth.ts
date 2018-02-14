@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Angular2TokenService } from 'angular2-token';
 import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -40,7 +39,7 @@ export class AuthProvider {
 
             if (token) {
                this.token = token[0];
-               console.log('Token store as auth property.', this.token);
+               console.log('Token stored as auth property.', this.token);
 
                let currentUser = this._tokenService.currentUserData;
                this.currentUser = currentUser;
@@ -76,6 +75,8 @@ export class AuthProvider {
          });
       }
 
-
+      registerAccount(userData) {
+         return this._tokenService.registerAccount(userData);
+      }
 
 }

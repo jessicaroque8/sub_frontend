@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Angular2TokenService } from 'angular2-token';
-
 import { TabsPage } from '../tabs/tabs'
-
 import { AuthProvider } from '../../providers/auth/auth'
-
 import { LoadingController } from 'ionic-angular';
-
 import { LinkMindBodyPage } from '../link-mind-body/link-mind-body';
 import { AlertController } from 'ionic-angular';
 
@@ -23,7 +19,7 @@ export class LoginPage {
         email: '',
         password: ''
      };
-   pushCreateAccount = LinkMindBodyPage;
+   pushPage = LinkMindBodyPage;
 
   constructor(
      public navCtrl: NavController,
@@ -65,10 +61,10 @@ export class LoginPage {
                  text: 'Ok',
                  handler: () => {
 
-                   this.clearInput().then(res => {
-                      alert.dismiss();
-                   });
-                   return false;
+                  this.clearInput();
+                  alert.dismiss();
+
+                  return false;
                  }
                }]
              });
@@ -76,5 +72,10 @@ export class LoginPage {
             });
          }
       });
+   }
+
+   clearInput() {
+      this.loginData.email = '';
+      this.loginData.password = '';
    }
 }

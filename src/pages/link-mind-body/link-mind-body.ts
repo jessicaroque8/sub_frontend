@@ -57,6 +57,7 @@ export class LinkMindBodyPage {
                staff_id_mb: response['id'],
                first_name: response['first_name'],
                last_name: response['last_name'],
+               image: response['image'],
                email: this.input.mbData['email'],
                siteids: this.input.mbData['siteids']
              });
@@ -91,6 +92,7 @@ export class LinkMindBodyPage {
          this.input.mbData['siteids'] = '';
          this.input.mbData['first_name'] = '';
          this.input.mbData['last_name'] = '';
+
          res(true);
       });
    }

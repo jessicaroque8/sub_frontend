@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
+import { AlertController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth';
+import { LoginPage } from '../login/login';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the CreateAccountPage page.
@@ -21,7 +26,8 @@ export class CreateAccountPage {
       first_name: "",
       last_name: "",
       email: "",
-      siteids: ""
+      siteids: "",
+      image: ""
    }
 
    user = {
@@ -37,7 +43,10 @@ export class CreateAccountPage {
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
-     public users: UsersProvider
+     public users: UsersProvider,
+     private alertCtrl: AlertController,
+     public loadingCtrl: LoadingController,
+     public auth: AuthProvider
   ) {
   }
 
@@ -48,6 +57,7 @@ export class CreateAccountPage {
     this.params.last_name = this.navParams.get('last_name');
     this.params.email = this.navParams.get('email');
     this.params.siteids = this.navParams.get('siteids');
+    this.params.image = this.navParams.get('image');
     console.log(this.params);
   }
 
@@ -55,9 +65,45 @@ export class CreateAccountPage {
      this.user.first_name = this.params.first_name;
      this.user.last_name = this.params.last_name;
      this.user.staff_id_mb = this.params.staff_id_mb;
-     this.users.createAccount(this.user).subscribe(val => {
-        console.log(val)
+     this.user.image = this.params.image;
+     let loader = this.loadingCtrl.create({
+         content: 'Creating your account...',
+         spinner: 'dots',
+         showBackdrop: false
      });
+     loader.present();
+     this.auth.registerAccount(this.user).subscribe(
+        res => {
+           console.log(res);
+           loader.dismiss().then(res => {
+               this.auth.signIn(this.user.email, this.user.password).subscribe( res => {
+                  this.navCtrl.push(TabsPage)
+               });
+            });
+         }, err => {
+            console.log(err);
+            loader.dismiss();
+            let errorBody = JSON.parse(err._body);
+            console.log(errorBody.errors.full_messages[0]);
+
+            let alert = this.alertCtrl.create({
+              title: errorBody.errors.full_messages[0],
+              buttons: [{
+                text: 'Ok',
+                handler: () => {
+
+                   alert.dismiss().then(res => {
+                      this.navCtrl.popToRoot();
+                   });
+
+                  return false
+
+                }
+              }]
+            });
+            alert.present();
+         }
+      );
    }
 
 }
