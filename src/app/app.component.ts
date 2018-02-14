@@ -35,7 +35,7 @@ export class MyApp {
          headers: {
                 'Content-Type':     'application/json',
                 'Accept':           'application/json',
-                // 'Access-Control-Allow-Origin': 'Content-Type'
+                'Access-Control-Allow-Origin': 'Content-Type'
             }
       }
     });
