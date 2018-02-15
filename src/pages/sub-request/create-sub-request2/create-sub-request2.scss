@@ -1,0 +1,28 @@
+page-create-sub-request2 {
+
+   .breadcrumbs-circle {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 2rem;
+   }
+
+   .active-breadcrumb {
+      background: color($colors, primary);
+      color: #fff;
+   }
+
+   .inactive-breadcrumb {
+      border: 2px solid color($colors, primary);
+      color: color($colors, primary);
+      background: #fff;
+   }
+
+   div.line {
+      width:100%;
+      background: color($colors, primary);
+      height: 3.5px;
+   }
+
+}

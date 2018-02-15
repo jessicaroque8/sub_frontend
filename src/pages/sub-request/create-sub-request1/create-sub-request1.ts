@@ -6,21 +6,14 @@ import { MindBodyProvider } from '../../../providers/mind-body/mind-body';
 import { AuthProvider } from '../../../providers/auth/auth';
 import { LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-// import { FormControl, FormGroup } from '@angular/forms';
-
-/**
- * Generated class for the CreateSubRequestPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { CreateSubRequest2Page } from '../create-sub-request2/create-sub-request2';
 
 @IonicPage()
 @Component({
-  selector: 'page-create-sub-request',
-  templateUrl: 'create-sub-request.html',
+  selector: 'page-create-sub-request1',
+  templateUrl: 'create-sub-request1.html',
 })
-export class CreateSubRequestPage {
+export class CreateSubRequest1Page {
 
    searchClassData = { filters: {
       staff_id_mb: '',
@@ -28,15 +21,11 @@ export class CreateSubRequestPage {
       end_date_time: null
    }};
 
-   showPartOne: boolean = true;
-   showPartTwo: boolean = false;
    disableSearchButton: boolean = true;
    showNextButton: boolean = false;
 
-   foundClasses = [];
+   foundClasses: Array<any> = [];
    selectedClassPosition: number;
-
-   newRequest: SubRequest = new SubRequest();
 
   constructor(
      public navCtrl: NavController,
@@ -50,9 +39,15 @@ export class CreateSubRequestPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateSubRequestPage');
+    console.log('ionViewDidLoad CreateSubRequest1Page');
     this.searchClassData.filters.staff_id_mb = this.auth.currentUser.staff_id_mb;
     console.log(this.searchClassData.filters.start_date_time);
+
+    // Remove when stable. Used to debug in browser.
+    this.searchClassData.filters.start_date_time = new Date('February 18, 2018 07:00:00');
+    this.searchClassData.filters.end_date_time = this.searchClassData.filters.start_date_time
+    this.disableSearchButton = false;
+    this.showNextButton = true;
   }
 
   ionViewDidLeave() {
@@ -62,16 +57,12 @@ export class CreateSubRequestPage {
         end_date_time: null
      }};
      this.foundClasses = [];
-     this.newRequest = new SubRequest();
-     this.showPartOne = true;
-     showPartTwo = false;
-     disableSearchButton = true;
-     showNextButton =  false;
-     foundClasses = [];
-     selectedClassPosition: null;
-     newRequest = new SubRequest();
+     this.disableSearchButton = true;
+     this.showNextButton =  false;
+     this.foundClasses = [];
+     this.selectedClassPosition = null;
 
-     console.log('CreateSubRequest view left, reset properties.')
+     console.log('CreateSubRequest1 view left, reset properties.')
    }
 
   showDatePicker() {
@@ -130,17 +121,11 @@ export class CreateSubRequestPage {
 
    }
 
-   startPartTwo() {
-      this.showPartOne = false;
-      this.showPartTwo = true;
-
-      let selectedClass = this.foundClasses[this.selectedClassPosition];
-
-      this.newRequest['class_id_mb'] = selectedClass['class_id_mb'];
-      this.newRequest['class_name'] = selectedClass['class_name'];
-      this.newRequest['start_date_time'] = selectedClass['start_date_time'];
-      this.newRequest['end_date_time'] = selectedClass['end_date_time'];
-      this.newRequest['end_date_time'] = selectedClass['end_date_time'];
+   goToPartTwo() {
+      this.navCtrl.push(CreateSubRequest2Page, {
+         foundClasses: this.foundClasses,
+         selectedClassPosition: this.selectedClassPosition
+      });
    }
 
 }

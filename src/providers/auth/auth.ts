@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Angular2TokenService } from 'angular2-token';
 import { Storage } from '@ionic/storage';
+import { User } from '../../models/user.model';
+
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -23,7 +25,7 @@ export class AuthProvider {
          });
 
          this.local.get('currentUser').then(val => {
-            this.currentUser = val;
+            this.currentUser = val as User;
             console.log(this.currentUser);
          });
 

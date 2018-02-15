@@ -1,0 +1,55 @@
+<!--
+  Generated template for the CreateSubRequest2Page page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create Request</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+   <ion-list>
+      <ion-item no-lines>
+          <div item-start class="breadcrumbs-circle inactive-breadcrumb">
+             <span>1</span>
+          </div>
+
+          <div class="line">
+          </div>
+
+          <div item-end class="breadcrumbs-circle active-breadcrumb">
+             <span>2</span>
+          </div>
+      </ion-item>
+   </ion-list>
+
+   <form (submit)="createRequest()">
+      <ion-item no-lines>
+         <ion-avatar class="sender-image" item-start>
+               <img src="{{ newRequest.user.image }}" class="sender-image" alt="Sender avatar" />
+         </ion-avatar>
+         <h1>{{ newRequest.class_name }}</h1>
+         <h2>{{ newRequest.user.first_name }} {{ newRequest.user.last_name }}</h2>
+      </ion-item>
+      <ion-item no-lines>
+            <h4>{{ newRequest['start_date_time'] | date: 'EEEE, MMMM d, y' }}</h4>
+            <h4>{{ newRequest['start_date_time'] | date: 'h:mm a' }} - {{ newRequest['end_date_time'] | date: 'h:mm a' }}</h4>
+      </ion-item>
+      <ion-item>
+         <ion-textarea placeholder="Notes (optional)"></ion-textarea>
+      </ion-item>
+
+    <button ion-button round type="submit">
+      Send Request
+    </button>
+  </form>
+
+
+
+</ion-content>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { CreateSubRequestPage } from '../sub-request/create-sub-request/create-sub-request';
+import { CreateSubRequest1Page } from '../sub-request/create-sub-request1/create-sub-request1';
 
 @Component({
   selector: 'page-home',
@@ -8,7 +8,7 @@ import { CreateSubRequestPage } from '../sub-request/create-sub-request/create-s
 })
 export class HomePage {
 
-   pushPage = CreateSubRequestPage;
+   pushPage = CreateSubRequest1Page;
 
   constructor(public navCtrl: NavController) {
 
