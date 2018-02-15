@@ -32,19 +32,19 @@ export class SubRequestsProvider {
 
 // For index views. Returns an Observable.
   loadRequests(scope: string) {
-      return this.http.get('http://localhost:3000/sub_requests/', {params: {scope: scope, user_id: this.currentUser.id} });
+      return this.http.get('http://10.0.0.103:8100/proxy/sub_requests/', {params: {scope: scope, user_id: this.currentUser.id} });
    }
 
 // Returns an Observable. Includes User, Group, Sendee, Sendee Reply, Sendee first_name, Sendee last_name, Sendee image.
    loadRequest(id: number): Observable<any> {
-      return this.http.get('http://localhost:3000/sub_requests/' + id )
+      return this.http.get('http://10.0.0.103:8100/proxy/sub_requests/' + id )
                .map( request => {
                         return request as SubRequest;
                   });
    }
 
    deleteRequest(id: number): Observable<any> {
-      return this.http.delete('http://localhost:3000/sub_requests/' + id );
+      return this.http.delete('http://10.0.0.103:8100/proxy/sub_requests/' + id );
    }
 
 }

@@ -7,32 +7,21 @@ import { HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class UsersProvider {
 
+   headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+   }
+
+   requestOptions = {
+      headers: new HttpHeaders(this.headers)
+   }
+
   constructor(public http: HttpClient) {
     console.log('Hello UsersProvider Provider');
   }
 
-  // const headers = {
-  //   'Content-Type': 'application/json',
-  //   'Accept': 'application/json',
-  //   'Access-Control-Request-Headers': 'Content-Type'
-  //  }
-  //
-  //  const requestOptions = {
-  //     headers: new HttpHeaders(
-  //       this.headers
-  //      )
-  //  }
-
    getUser(id) {
-      return this.http.get('http://localhost:3000/users/' + id);
+      return this.http.get('http://10.0.0.103:8100/proxy/users/' + id);
    }
-
-   linkToMindBody(mbData) {
-      return this.http.post('http://localhost:3000/link_to_mb', mbData);
-   }
-
-   // createAccount(userData) {
-   //    return this.http.post('http://localhost:3000/auth/', JSON.stringify(userData), this.requestOptions);
-   // }
 
 }

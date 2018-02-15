@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Angular2TokenService } from 'angular2-token';
 import { IonicStorageModule } from '@ionic/storage';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
@@ -20,13 +21,15 @@ import { AccountPage } from '../pages/account/account';
 import { ShowSubRequestPage } from '../pages/sub-request/show-sub-request/show-sub-request';
 import { LinkMindBodyPage } from '../pages/link-mind-body/link-mind-body';
 import { CreateAccountPage } from '../pages/create-account/create-account';
+import { CreateSubRequestPage } from '../pages/sub-request/create-sub-request/create-sub-request';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { SubRequestsProvider } from '../providers/sub-requests/sub-requests';
 import { UsersProvider } from '../providers/users/users';
-import { LoadingController } from 'ionic-angular';
+import { DatePicker } from '@ionic-native/date-picker';
+import { MindBodyProvider } from '../providers/mind-body/mind-body';
 
 const IonicPro = Pro.init('6200de52', {
   appVersion: "0.0.1"
@@ -65,7 +68,8 @@ export class MyErrorHandler implements ErrorHandler {
     AccountPage,
     ShowSubRequestPage,
     LinkMindBodyPage,
-    CreateAccountPage
+    CreateAccountPage,
+    CreateSubRequestPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,8 @@ export class MyErrorHandler implements ErrorHandler {
     HttpModule,
     HttpClientModule,
     RouterModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -87,7 +92,8 @@ export class MyErrorHandler implements ErrorHandler {
     AccountPage,
     ShowSubRequestPage,
     LinkMindBodyPage,
-    CreateAccountPage
+    CreateAccountPage,
+    CreateSubRequestPage
   ],
   providers: [
     StatusBar,
@@ -97,7 +103,9 @@ export class MyErrorHandler implements ErrorHandler {
     AuthProvider,
     Angular2TokenService,
     SubRequestsProvider,
-    UsersProvider
+    UsersProvider,
+    DatePicker,
+    MindBodyProvider
   ]
 })
 

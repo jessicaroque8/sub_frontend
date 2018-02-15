@@ -1,9 +1,5 @@
 page-show-sub-request {
 
-   // ion-grid {
-   //    height: 100%;
-   // }
-   //
    ion-row {
       padding: 0;
    }
@@ -21,45 +17,36 @@ page-show-sub-request {
    }
 
    .item-ios ion-avatar img.sender-image {
-      // margin: auto;
       width: 60px;
       height: 60px;
    }
 
    .item-md ion-avatar img.sender-image {
-      // margin: auto;
       width: 60px;
       height: 60px;
-      border: 3px #222;
    }
 
    .item-ios h1 {
-      font-size: 2rem;
       font-weight: bold;
    }
 
    .item-md h1 {
-      font-size: 2rem;
       font-weight: bold;
    }
 
    .item-ios h2{
-      font-size: 1.3rem;
       font-weight: semi-bold;
    }
 
    .item-md h2{
-      font-size: 1.3rem;
       font-weight: semi-bold;
    }
 
    .item-ios h4 {
-      font-size: 1.2rem;
       font-weight: semi-bold;
    }
 
    .item-md h4 {
-      font-size: 1.2rem;
       font-weight: semi-bold;
    }
 
@@ -74,49 +61,38 @@ page-show-sub-request {
 
    sub {
       bottom: 0em;
-      font-size: 1rem;
       color: #222;
    }
 
-   .item-ios p {
-      font-size: 1.2rem;
-   }
-
-   .item-md p {
-      font-size: 1.2rem;
-   }
-
    .segment-ios .segment-button {
-      height: 4rem;
-      line-height: 1.5rem;
+      height: 7rem;
+      line-height: 3rem;
    }
 
    .segment-md .segment-button {
-      height: 4rem;
-      line-height: 1.5rem;
+      height: 7rem;
+      line-height: 3rem;
    }
 
    .segment-ios .segment-button .show-replies-head {
       margin-top: 5px;
-      font-size: 1.5rem;
+      font-size: 2.5rem;
       font-weight: bold;
       display: block;
    }
 
    .segment-md .segment-button .show-replies-head {
       margin-top: 5px;
-      font-size: 1.5rem;
+      font-size: 2.5rem;
       font-weight: bold;
       display: block;
    }
 
    .segment-ios .segment-button .show-replies-sub {
-      font-size: 0.5rem;
       display:block;
    }
 
    .segment-md .segment-button .show-replies-sub {
-      font-size: 0.5rem;
       display:block;
    }
 

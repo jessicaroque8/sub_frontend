@@ -1,0 +1,79 @@
+<!--
+  Generated template for the CreateSubRequestPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create Request</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+     <ion-item no-lines>
+         <div item-start class="breadcrumbs-circle">
+            <span class="breadcrumbs-text">1</span>
+         </div>
+         <div class="line">
+         </div>
+         <div item-end class="breadcrumbs-circle">
+            <span class="breadcrumbs-text">2</span>
+         </div>
+     </ion-item>
+  </ion-list>
+
+  <div *ngIf="showPartOne">
+     <h2 text-center>
+       Let's find your class.
+     </h2>
+
+     <div text-center>
+       <button ion-button round [outline]="searchClassData.filters.start_date_time" icon-left (tap)="showDatePicker()">
+             <ion-icon name="calendar"></ion-icon>
+             <span *ngIf="!searchClassData.filters.start_date_time">Select Date & Time</span>
+             <span *ngIf="searchClassData.filters.start_date_time">{{ searchClassData.filters.start_date_time | date: 'EEEE, MMM d, y, h:mm a' }}</span>
+       </button>
+       <button (tap)="searchForClass()" [disabled]="disableSearchButton" ion-button round>
+             <ion-icon name="search"></ion-icon>
+       </button>
+     </div>
+
+     <ion-list radio-group [(ngModel)]="selectedClassPosition">
+          <ion-item *ngFor="let class of foundClasses; let i = index">
+               <ion-label>
+                  {{ class['class_name'] }}<br />
+                  {{ class['start_date_time'] | date: 'EEEE, MMMM d, y' }}<br />
+                  {{ class['start_date_time'] | date: 'h:mm a' }} - {{ class['end_date_time'] | date: 'h:mm a' }}
+               </ion-label>
+               <ion-radio value="{{ i }}"></ion-radio>
+          </ion-item>
+     </ion-list>
+
+     <div *ngIf="showNextButton" text-right>
+         <button ion-button icon-right round (tap)="startPartTwo()">
+            Next <ion-icon name="arrow-forward"></ion-icon>
+         </button>
+     </div>
+  </div>
+
+  <div *ngIf="showPartTwo">
+     {{ newRequest['class_name'] }}
+  </div>
+
+
+</ion-content>
+
+<ion-footer>
+   <ion-grid>
+      <ion-row align-items-center>
+         <ion-col align-self-center>
+            <img src="../../assets/imgs/powered-by-mb-logo/small.png" text-center alt="Powered by MINDBODY"/>
+         </ion-col>
+      </ion-row>
+   </ion-grid>
+</ion-footer>

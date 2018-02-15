@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UsersProvider } from '../../providers/users/users';
+import { MindBodyProvider } from '../../providers/mind-body/mind-body';
 import { CreateAccountPage } from '../create-account/create-account';
 import { AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
@@ -25,7 +25,7 @@ export class LinkMindBodyPage {
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
-     public users: UsersProvider,
+     public mb: MindBodyProvider,
      private alertCtrl: AlertController,
      public loadingCtrl: LoadingController
   ) {
@@ -50,7 +50,7 @@ export class LinkMindBodyPage {
        showBackdrop: false
      });
      loader.present();
-     this.users.linkToMindBody(this.input).subscribe(response => {
+     this.mb.linkToMindBody(this.input).subscribe(response => {
         if (response['id']) {
            loader.dismiss().then( result => {
              this.navCtrl.push(CreateAccountPage, {

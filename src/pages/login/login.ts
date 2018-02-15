@@ -71,6 +71,8 @@ export class LoginPage {
              alert.present();
             });
          }
+      }).catch( (err) => {
+         console.log(JSON.stringify(err));
       });
    }
 

@@ -30,13 +30,13 @@ export class MyApp {
     });
 
     this._tokenService.init({
-      apiBase: 'http://localhost:3000',
+      apiBase: 'http://10.0.0.103:8100/proxy',
       globalOptions: {
          headers: {
                 'Content-Type':     'application/json',
                 'Accept':           'application/json',
-                'Access-Control-Allow-Origin': 'Content-Type'
-            }
+                'Access-Control-Allow-Origin': '*'
+         }
       }
     });
   }
