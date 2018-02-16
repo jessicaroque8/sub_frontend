@@ -2,14 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubRequest } from '../../../models/sub-request.model';
 import { AuthProvider } from '../../../providers/auth/auth';
-
-
-/**
- * Generated class for the CreateSubRequest2Page page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { GroupsProvider } from '../../../providers/groups/groups';
 
 @IonicPage()
 @Component({
@@ -23,8 +16,9 @@ export class CreateSubRequest2Page {
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
-     public auth: AuthProvider
-  ) {}
+     public auth: AuthProvider,
+     public groups: GroupsProvider
+   ) {}
 
   ionViewWillLoad() {
      let foundClasses = this.navParams.get('foundClasses');
@@ -42,6 +36,11 @@ export class CreateSubRequest2Page {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad CreateSubRequest2Page');
+      this.groups.getUserGroups().subscribe(val => {
+         console.log(val)
+      }, err => {
+         console.log(err)
+      });
   }
 
   createRequest() {

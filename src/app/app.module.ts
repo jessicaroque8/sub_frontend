@@ -31,6 +31,7 @@ import { SubRequestsProvider } from '../providers/sub-requests/sub-requests';
 import { UsersProvider } from '../providers/users/users';
 import { DatePicker } from '@ionic-native/date-picker';
 import { MindBodyProvider } from '../providers/mind-body/mind-body';
+import { GroupsProvider } from '../providers/groups/groups';
 
 const IonicPro = Pro.init('6200de52', {
   appVersion: "0.0.1"
@@ -108,7 +109,8 @@ export class MyErrorHandler implements ErrorHandler {
     SubRequestsProvider,
     UsersProvider,
     DatePicker,
-    MindBodyProvider
+    MindBodyProvider,
+    GroupsProvider
   ]
 })
 
