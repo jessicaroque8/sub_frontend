@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar>
+      <ion-title>Edit Request</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+            <form (submit)="editRequest()">
+
+               <ion-item no-lines>
+                  <ion-avatar class="sender-image" item-start>
+                        <img src="{{ request.user.image }}" class="sender-image" alt="Sender avatar" />
+                  </ion-avatar>
+                  <h1>{{ request.class_name }}</h1>
+                  <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+               </ion-item>
+               <ion-item>
+                  <ion-label stacked>Class Name</ion-label>
+                  <ion-input type="text" [(ngModel)]="request.class_name" name="class_name">{{ request.class_name }}</ion-input>
+               </ion-item>
+               <ion-item>
+                 <ion-label stacked>Start Time</ion-label>
+                 <ion-datetime displayFormat="MM/DD h:mm A" pickerFormat="MMM DD h mm A" [(ngModel)]="request.start_date_time" name="start_date_time"></ion-datetime>
+               </ion-item>
+               <ion-item>
+                 <ion-label stacked>End Time</ion-label>
+                 <ion-datetime displayFormat="MM/DD h:mm A" pickerFormat="MMM DD h mm A" [(ngModel)]="request.end_date_time" name="end_date_time"></ion-datetime>
+               </ion-item>
+               <ion-item>
+                  <ion-label stacked>Notes (optional)</ion-label>
+                  <ion-textarea [(ngModel)]="request.note" name="note"></ion-textarea>
+               </ion-item>
+
+               <div text-center>
+                 <button ion-button round type="submit">
+                   Save
+                 </button>
+               </div>
+
+            </form>
+
+</ion-content>

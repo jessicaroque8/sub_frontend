@@ -23,6 +23,7 @@ import { LinkMindBodyPage } from '../pages/link-mind-body/link-mind-body';
 import { CreateAccountPage } from '../pages/create-account/create-account';
 import { CreateSubRequest1Page } from '../pages/sub-request/create-sub-request1/create-sub-request1';
 import { CreateSubRequest2Page } from '../pages/sub-request/create-sub-request2/create-sub-request2';
+import { EditSubRequestPage } from '../pages/sub-request/edit-sub-request/edit-sub-request';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -72,7 +73,8 @@ export class MyErrorHandler implements ErrorHandler {
     LinkMindBodyPage,
     CreateAccountPage,
     CreateSubRequest1Page,
-    CreateSubRequest2Page
+    CreateSubRequest2Page,
+    EditSubRequestPage
   ],
   imports: [
     BrowserModule,
@@ -97,7 +99,8 @@ export class MyErrorHandler implements ErrorHandler {
     LinkMindBodyPage,
     CreateAccountPage,
     CreateSubRequest1Page,
-    CreateSubRequest2Page
+    CreateSubRequest2Page,
+    EditSubRequestPage
   ],
   providers: [
     StatusBar,
