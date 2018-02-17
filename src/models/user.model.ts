@@ -1,3 +1,7 @@
+import { Group } from './group.model';
+import { Sendee } from './sendee.model';
+import { SubRequest } from './sub-request.model';
+
 export class User {
    created_at: string;
    email: string;
@@ -9,4 +13,7 @@ export class User {
    staff_id_mb: number;
    uid: string;
    updated_at: string;
+   groups: Array<Group>;
+   sub_requests: Array<SubRequest>;
+   sendees: Array<Sendee>;
 }

@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -26,6 +28,7 @@ export class ShowSubRequestPage {
    // repliesToShow: all, agree, maybe, decline, no_reply
    repliesToShow: string;
    loaded: boolean;
+   disableBack: boolean;
 
   constructor(
      public navCtrl: NavController,
@@ -34,7 +37,8 @@ export class ShowSubRequestPage {
      public users: UsersProvider,
      public actionSheetCtrl: ActionSheetController,
      public alertCtrl: AlertController,
-     public loadingCtrl: LoadingController
+     public loadingCtrl: LoadingController,
+     public toastCtrl: ToastController
   ) {}
 
   ionViewDidLoad() {
@@ -56,6 +60,11 @@ export class ShowSubRequestPage {
             this.loaded = true;
          });
       });
+   }
+
+   ionViewWillLoad() {
+      this.disableBack = this.navParams.get('disableBack');
+      console.log(this.disableBack);
    }
 
    sortSendeesByReplyValue() {
@@ -127,12 +136,27 @@ export class ShowSubRequestPage {
             this.sr.deleteRequest(this.request_id).subscribe( val => {
                console.log(val);
             });
-            this.navCtrl.pop();
+            this.navCtrl.setRoot(HomePage);
+            this.presentToast();
           }
         }
       ]
     });
     confirm.present();
+   }
+
+   presentToast() {
+      let toast = this.toastCtrl.create({
+         message: 'Request deleted.',
+         duration: 3000,
+         position: 'bottom'
+      });
+
+      toast.onDidDismiss(() => {
+         console.log('Dismissed toast');
+      });
+
+      toast.present();
    }
 
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Angular2TokenService } from 'angular2-token';
 import { Storage } from '@ionic/storage';
 import { User } from '../../models/user.model';
+import { UsersProvider } from '../users/users';
 
 import 'rxjs/add/operator/map';
 
@@ -15,7 +16,8 @@ export class AuthProvider {
   constructor(
      public http: HttpClient,
      public _tokenService: Angular2TokenService,
-     public local: Storage
+     public local: Storage,
+     public users: UsersProvider
   )   {
          console.log('Hello AuthProvider Provider');
 
@@ -23,12 +25,10 @@ export class AuthProvider {
             this.token = val;
             console.log(this.token);
          });
-
          this.local.get('currentUser').then(val => {
-            this.currentUser = val as User;
+            this.currentUser = val;
             console.log(this.currentUser);
          });
-
       }
 
       signIn(email, password) {
@@ -41,15 +41,16 @@ export class AuthProvider {
 
             if (token) {
                this.token = token[0];
-               console.log('Token stored as auth property.', this.token);
+               console.log('Token stored as auth property. ', this.token);
+
+               this.local.set('token', this.token).then(val => {
+                  console.log('Token stored in local storage. ', val)
+               })
 
                let currentUser = this._tokenService.currentUserData;
                this.currentUser = currentUser;
-               console.log(this.currentUser.id);
+               console.log('currentUser stored as auth property from _tokenService. ', this.currentUser);
 
-               this.local.set('currentUser', currentUser).then((val) => {
-                  console.log('currentUser set in local storage.');
-               });
                return true;
             } else {
                return false;

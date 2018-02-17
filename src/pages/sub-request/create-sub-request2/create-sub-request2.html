@@ -37,17 +37,29 @@
          <h1>{{ newRequest.class_name }}</h1>
          <h2>{{ newRequest.user.first_name }} {{ newRequest.user.last_name }}</h2>
       </ion-item>
-      <ion-item no-lines>
+      <ion-item>
             <h4>{{ newRequest['start_date_time'] | date: 'EEEE, MMMM d, y' }}</h4>
             <h4>{{ newRequest['start_date_time'] | date: 'h:mm a' }} - {{ newRequest['end_date_time'] | date: 'h:mm a' }}</h4>
       </ion-item>
       <ion-item>
-         <ion-textarea placeholder="Notes (optional)"></ion-textarea>
+         <ion-label>Notes (optional)</ion-label>
+         <ion-textarea [(ngModel)]="newRequest.note" name="note"></ion-textarea>
+      </ion-item>
+      <ion-item>
+         <ion-label>Group</ion-label>
+         <ion-select [(ngModel)]="newRequest.group" [interface]="popover" name="group">
+            <ion-option *ngFor="let group of newRequest.user.groups" [value]="group">
+               {{ group.name }}
+            </ion-option>
+         </ion-select>
       </ion-item>
 
-    <button ion-button round type="submit">
-      Send Request
-    </button>
+    <div text-center>
+      <button ion-button round type="submit">
+        Send Request
+      </button>
+    </div>
+
   </form>
 
 

@@ -22,8 +22,8 @@ export class GroupsProvider {
     console.log('Hello GroupsProvider Provider');
   }
 
-  getUserGroups() {
-     return this.http.get('http://10.0.0.103:8100/proxy/groups/', {params: {user_id: this.auth.currentUser.id} });
+  showGroup(groupId) {
+     return this.http.get('http://10.0.0.103:8100/proxy/groups/' + groupId );
   }
 
 }

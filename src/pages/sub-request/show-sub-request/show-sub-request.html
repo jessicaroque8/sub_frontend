@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar [hideBackButton]="disableBack">
       <ion-buttons right>
          <button *ngIf="view == 'sent'" ion-button icon-only (tap)="presentActionSheet()">
               <ion-icon name="more"></ion-icon>

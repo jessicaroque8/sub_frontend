@@ -43,6 +43,10 @@ export class SubRequestsProvider {
                   });
    }
 
+   createRequest(params): Observable<any> {
+      return this.http.post('http://10.0.0.103:8100/proxy/sub_requests/', params );
+   }
+
    deleteRequest(id: number): Observable<any> {
       return this.http.delete('http://10.0.0.103:8100/proxy/sub_requests/' + id );
    }

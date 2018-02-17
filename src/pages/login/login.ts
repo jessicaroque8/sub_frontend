@@ -6,6 +6,9 @@ import { AuthProvider } from '../../providers/auth/auth'
 import { LoadingController } from 'ionic-angular';
 import { LinkMindBodyPage } from '../link-mind-body/link-mind-body';
 import { AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { UsersProvider } from '../../providers/users/users';
+
 
 @IonicPage()
 @Component({
@@ -27,7 +30,9 @@ export class LoginPage {
      public auth: AuthProvider,
      public _tokenService: Angular2TokenService,
      public loadingCtrl: LoadingController,
-     private alertCtrl: AlertController
+     private alertCtrl: AlertController,
+     public local: Storage,
+     public users: UsersProvider
    ) {
   }
 
@@ -48,10 +53,20 @@ export class LoginPage {
      this.auth.signIn(email, password).toPromise().then( (result) => {
         console.log(result);
         if (result === true) {
-           console.log('Sign in success.'),
-           loader.dismiss().then(res => {
-             this.navCtrl.push(TabsPage)
-          });
+
+           this.users.getUser(this.auth.currentUser.id).subscribe( val => {
+               this.local.set('currentUser', val).then( (val) => {
+                  console.log(val);
+                  console.log('currentUser set in local storage. ', val);
+
+
+                  console.log('Sign in success.'),
+
+                  loader.dismiss().then( (res) => {
+                     this.navCtrl.push(TabsPage)
+                  });
+               });
+            });
         } else {
            console.log('Sign in fail.'),
            loader.dismiss().then( result => {

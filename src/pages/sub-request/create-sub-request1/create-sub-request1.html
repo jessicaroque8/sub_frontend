@@ -22,7 +22,7 @@
 
          <div class="line">
          </div>
-         
+
          <div item-end class="breadcrumbs-circle inactive-breadcrumb">
             <span>2</span>
          </div>
@@ -39,7 +39,7 @@
           <span *ngIf="!searchClassData.filters.start_date_time">Select Date & Time</span>
           <span *ngIf="searchClassData.filters.start_date_time">{{ searchClassData.filters.start_date_time | date: 'EEEE, MMM d, y, h:mm a' }}</span>
     </button>
-    <button (tap)="searchForClass()" [disabled]="disableSearchButton" ion-button round>
+    <button (tap)="searchForClass()" [disabled]="disableSearchButton" ion-button round [outline]="outlineSearch">
           <ion-icon name="search"></ion-icon>
     </button>
   </div>
@@ -56,7 +56,7 @@
   </ion-list>
 
   <div *ngIf="showNextButton" text-right>
-      <button ion-button icon-right round (tap)="goToPartTwo()">
+      <button ion-button icon-right round [disabled]="!selectedClassPosition" (tap)="goToPartTwo()">
          Next <ion-icon name="arrow-forward"></ion-icon>
       </button>
   </div>

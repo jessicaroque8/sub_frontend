@@ -7,6 +7,7 @@ import { AuthProvider } from '../../../providers/auth/auth';
 import { LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { CreateSubRequest2Page } from '../create-sub-request2/create-sub-request2';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -23,6 +24,8 @@ export class CreateSubRequest1Page {
 
    disableSearchButton: boolean = true;
    showNextButton: boolean = false;
+   disableNextButton: boolean = true;
+   outlineSearch: boolean = false;
 
    foundClasses: Array<any> = [];
    selectedClassPosition: number;
@@ -44,7 +47,7 @@ export class CreateSubRequest1Page {
     console.log(this.searchClassData.filters.start_date_time);
 
     // Remove when stable. Used to debug in browser.
-    this.searchClassData.filters.start_date_time = new Date('February 18, 2018 07:00:00');
+    this.searchClassData.filters.start_date_time = new Date('February 23, 2018 07:00:00');
     this.searchClassData.filters.end_date_time = this.searchClassData.filters.start_date_time
     this.disableSearchButton = false;
     this.showNextButton = true;
@@ -106,6 +109,7 @@ export class CreateSubRequest1Page {
                loader.dismiss();
                console.log('this.foundClasses: ', this.foundClasses),
                console.log(this.foundClasses[0]['class_id_mb'])
+               this.outlineSearch = true;
                this.showNextButton = true;
             } else {
                loader.dismiss();
