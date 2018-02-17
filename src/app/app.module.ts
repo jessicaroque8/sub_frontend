@@ -23,6 +23,7 @@ import { LinkMindBodyPage } from '../pages/link-mind-body/link-mind-body';
 import { CreateAccountPage } from '../pages/create-account/create-account';
 import { CreateSubRequest1Page } from '../pages/sub-request/create-sub-request1/create-sub-request1';
 import { CreateSubRequest2Page } from '../pages/sub-request/create-sub-request2/create-sub-request2';
+import { EditSubRequestPage } from '../pages/sub-request/edit-sub-request/edit-sub-request';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,6 +33,7 @@ import { UsersProvider } from '../providers/users/users';
 import { DatePicker } from '@ionic-native/date-picker';
 import { MindBodyProvider } from '../providers/mind-body/mind-body';
 import { GroupsProvider } from '../providers/groups/groups';
+import { RepliesProvider } from '../providers/replies/replies';
 
 const IonicPro = Pro.init('6200de52', {
   appVersion: "0.0.1"
@@ -72,7 +74,8 @@ export class MyErrorHandler implements ErrorHandler {
     LinkMindBodyPage,
     CreateAccountPage,
     CreateSubRequest1Page,
-    CreateSubRequest2Page
+    CreateSubRequest2Page,
+    EditSubRequestPage
   ],
   imports: [
     BrowserModule,
@@ -97,7 +100,8 @@ export class MyErrorHandler implements ErrorHandler {
     LinkMindBodyPage,
     CreateAccountPage,
     CreateSubRequest1Page,
-    CreateSubRequest2Page
+    CreateSubRequest2Page,
+    EditSubRequestPage
   ],
   providers: [
     StatusBar,
@@ -110,7 +114,8 @@ export class MyErrorHandler implements ErrorHandler {
     UsersProvider,
     DatePicker,
     MindBodyProvider,
-    GroupsProvider
+    GroupsProvider,
+    RepliesProvider
   ]
 })
 

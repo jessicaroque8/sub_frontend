@@ -10,6 +10,7 @@ import { AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from '../../home/home';
+import { EditSubRequestPage } from '../edit-sub-request/edit-sub-request';
 
 
 @IonicPage()
@@ -105,6 +106,9 @@ export class ShowSubRequestPage {
               text: 'Edit',
               handler: () => {
                 console.log('Edit clicked');
+                this.navCtrl.push(EditSubRequestPage, {
+                   request: this.request
+                });
               }
             },
             {
