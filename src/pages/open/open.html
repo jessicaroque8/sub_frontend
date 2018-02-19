@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-   <div *ngIf="loaded">
+   <!-- <div *ngIf="loaded">
       <div padding>
         <ion-segment [(ngModel)]="view">
           <ion-segment-button value="sent">
@@ -43,15 +43,15 @@
               </ion-item>
 
               <ion-item-options side="right">
-                 <button ion-button color="secondary" (click)="reply(request, 'agree', 'sure thang chicken wang')">Agree</button>
-                 <button ion-button color="alert" (click)="reply('maybe')">Maybe</button>
-                 <button ion-button color="danger" (click)="reply('decline')">Decline</button>
+                 <button ion-button color="secondary" (click)="reply(request, 'agree')">Agree</button>
+                 <button ion-button color="alert" (click)="reply(request, 'maybe')">Maybe</button>
+                 <button ion-button color="danger" (click)="reply(request, 'decline')">Decline</button>
               </ion-item-options>
 
            </ion-item-sliding>
         </ion-list>
       </div>
-   </div>
+   </div> -->
 
 
 </ion-content>

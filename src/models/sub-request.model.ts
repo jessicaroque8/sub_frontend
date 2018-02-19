@@ -1,6 +1,7 @@
 import { Sendee } from './sendee.model';
 import { User } from './user.model';
 import { Group } from './group.model';
+// import { AuthProvider } from '../providers/auth/auth';
 
 export class SubRequest {
   id: number;
@@ -17,4 +18,23 @@ export class SubRequest {
   updated_at: string;
   sender_img: string;
   sendees: Array<Sendee> = [];
+  group_name: string;
+  agree_count: number
+
+  // get currentUserSendee() {
+  //    return this.findCurrentUserSendee();
+  // }
+  //
+  // findCurrentUserSendee() {
+  //    for (let sendee of sendees) {
+  //       for (let s of self.sendees) {
+  //         if (s.user.id == this.auth.currentUser.id) {
+  //            let sendee= {};
+  //            sendee = s;
+  //            return sendee;
+  //           };
+  //        }
+  //     }
+  //  }
+
 }

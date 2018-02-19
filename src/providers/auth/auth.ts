@@ -21,9 +21,9 @@ export class AuthProvider {
   )   {
          console.log('Hello AuthProvider Provider');
 
-         this.local.get('token').then(val => {
-            this.token = val;
-            console.log(this.token);
+         this.local.get('accessToken').then(val => {
+            this.accessToken = val;
+            console.log(this.accessToken);
          });
          this.local.get('currentUser').then(val => {
             this.currentUser = val;
@@ -36,16 +36,29 @@ export class AuthProvider {
             email:    email,
             password: password
          }).map( (response) => {
+            let headers = response.headers.toJSON()
 
-            let token = response.headers.toJSON() && response.headers.toJSON()['access-token']
+            if (headers['access-token']) {
 
-            if (token) {
-               this.token = token[0];
-               console.log('Token stored as auth property. ', this.token);
-
-               this.local.set('token', this.token).then(val => {
+               this.local.set('accessToken', headers['access-token']).then(val => {
                   console.log('Token stored in local storage. ', val)
+               });
+
+               this.local.set('expiry', headers['expiry']).then(val => {
+                  console.log('Expiry stored in local storage. ', val)
                })
+
+               this.local.set('token-type', headers['token-type']).then(val => {
+                  console.log('Token-type stored in local storage. ', val)
+               })
+
+               this.local.set('client', headers['client']).then(val => {
+                  console.log('Client stored in local storage. ', val)
+               });
+
+               this.local.set('uid', headers['uid']).then(val => {
+                  console.log('Uid stored in local storage. ', val)
+               });
 
                let currentUser = this._tokenService.currentUserData;
                this.currentUser = currentUser;
@@ -62,11 +75,19 @@ export class AuthProvider {
          console.log('in log out')
          this._tokenService.signOut().toPromise().then( result => {
                console.log('auth response to log out: ', result),
-               this.local.remove('token').then((val) => {
-                  console.log('local token: ', val),
-                  this.token = null;
-                  console.log('property token: ', this.token)
+               this.local.remove('accessToken').then((val) => {
+                  console.log('local accessToken: ', val)
                });
+               this.local.remove('expiry').then((val) => {
+                  console.log('local expiry: ', val)
+               });
+               this.local.remove('client').then((val) => {
+                  console.log('local client: ', val)
+               });
+               this.local.remove('uid').then((val) => {
+                  console.log('local uid: ', val)
+               });
+
                this.local.remove('currentUser').then((val) => {
                   console.log('local currentUser: ', val),
                   this.currentUser = null;
