@@ -9,6 +9,7 @@ import { Reply } from '../../models/reply.model';
 import { UsersProvider } from '../users/users';
 import { Storage } from '@ionic/storage';
 import { HttpHeaders } from '@angular/common/http';
+// import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class SubRequestsProvider {
@@ -21,7 +22,8 @@ export class SubRequestsProvider {
    }
 
    requestOptions = {
-      headers: new HttpHeaders(this.headers)
+      headers: new HttpHeaders(this.headers),
+      params: {}
    }
 
   constructor(
@@ -69,16 +71,14 @@ export class SubRequestsProvider {
 
 // For index views. Returns an Observable.
 
-loadRequests() {
-    return this.http.get('http://10.0.0.103:8100/proxy/sub_requests/', this.requestOptions)
-                 .map( requestsArray => {
-                    console.log(requestsArray);
-                    let requests = {
-                       sent: requestsArray.sent as Array<SubRequest>,
-                       incoming: requestsArray.incoming as Array<SubRequest>
-                    }
-                    return requests;
-                 });
+loadRequests(view: string) {
+   let headersParams = this.requestOptions;
+      headersParams.params = {
+         view: view
+      };
+      console.log(headersParams);
+
+    return this.http.get('http://10.0.0.103:8100/proxy/sub_requests/', headersParams);
  }
 
   // loadRequests(scope: string) {
@@ -95,22 +95,28 @@ loadRequests() {
 
 // Returns an Observable. Includes User, Group, Sendee, Sendee Reply, Sendee first_name, Sendee last_name, Sendee image.
    loadRequest(id: number): Observable<any> {
-      return this.http.get('http://10.0.0.103:8100/proxy/sub_requests/' + id )
+      return this.http.get('http://10.0.0.103:8100/proxy/sub_requests/' + id, this.requestOptions )
                .map( request => {
                         return request as SubRequest;
                   });
    }
 
    createRequest(params): Observable<any> {
-      return this.http.post('http://10.0.0.103:8100/proxy/sub_requests/', params );
+      let headersParams = this.requestOptions;
+         headersParams.params = params;
+
+      return this.http.post('http://10.0.0.103:8100/proxy/sub_requests/', headersParams );
    }
 
    editRequest(id, params): Observable<any> {
-      return this.http.put('http://10.0.0.103:8100/proxy/sub_requests/' + id, params );
+      let headersParams = this.requestOptions;
+         headersParams.params = params;
+
+      return this.http.put('http://10.0.0.103:8100/proxy/sub_requests/' + id, headersParams );
    }
 
    deleteRequest(id: number): Observable<any> {
-      return this.http.delete('http://10.0.0.103:8100/proxy/sub_requests/' + id );
+      return this.http.delete('http://10.0.0.103:8100/proxy/sub_requests/' + id, this.requestOptions );
    }
 
 }

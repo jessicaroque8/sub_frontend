@@ -48,7 +48,8 @@ export class CreateSubRequest1Page {
 
     // Remove when stable. Used to debug in browser.
     this.searchClassData.filters.start_date_time = new Date('February 24, 2018 07:00:00');
-    this.searchClassData.filters.end_date_time = this.searchClassData.filters.start_date_time
+    this.searchClassData.filters.end_date_time = this.searchClassData.filters.start_date_time;
+
     this.disableSearchButton = false;
     this.showNextButton = true;
   }

@@ -9,13 +9,13 @@
 
 <ion-content padding>
 
-   <!-- <div *ngIf="loaded">
+   <div *ngIf="loaded">
       <div padding>
         <ion-segment [(ngModel)]="view">
           <ion-segment-button value="sent">
             Sent
           </ion-segment-button>
-          <ion-segment-button value="incoming">
+          <ion-segment-button value="incoming" (tap)="getIncoming()">
             Incoming
           </ion-segment-button>
         </ion-segment>
@@ -24,7 +24,7 @@
       <div [ngSwitch]="view">
         <ion-list *ngSwitchCase="'sent'">
               <ion-item *ngFor="let request of sent" (tap)="showRequest(request.id)">
-                <ion-avatar item-start><img src="{{ request.sender_img }}" alt="Sender avatar"/></ion-avatar>
+                <ion-avatar item-start><img src="{{ request.user.image }}" alt="Sender avatar"/></ion-avatar>
                  <h2>{{ request.class_name }}</h2>
 
                  <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
@@ -36,7 +36,7 @@
            <ion-item-sliding *ngFor="let request of incoming" #item>
 
               <ion-item (tap)="showRequest(request.id)">
-                 <ion-avatar item-start><img src="{{ request.sender_img }}" alt="Sender avatar"/></ion-avatar>
+                 <ion-avatar item-start><img src="{{ request.user.image }}" alt="Sender avatar"/></ion-avatar>
                  <h2>{{ request.class_name }}</h2>
                  <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
                  <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
@@ -51,7 +51,7 @@
            </ion-item-sliding>
         </ion-list>
       </div>
-   </div> -->
+   </div>
 
 
 </ion-content>

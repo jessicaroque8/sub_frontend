@@ -21,10 +21,10 @@ export class AuthProvider {
   )   {
          console.log('Hello AuthProvider Provider');
 
-         this.local.get('accessToken').then(val => {
-            this.accessToken = val;
-            console.log(this.accessToken);
-         });
+         // this.local.get('accessToken').then(val => {
+         //    this.accessToken = val;
+         //    console.log(this.accessToken);
+         // });
          this.local.get('currentUser').then(val => {
             this.currentUser = val;
             console.log(this.currentUser);
@@ -80,6 +80,9 @@ export class AuthProvider {
                });
                this.local.remove('expiry').then((val) => {
                   console.log('local expiry: ', val)
+               });
+               this.local.remove('token-type').then((val) => {
+                  console.log('local token-type: ', val)
                });
                this.local.remove('client').then((val) => {
                   console.log('local client: ', val)

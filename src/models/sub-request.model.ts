@@ -16,10 +16,9 @@ export class SubRequest {
   closed: boolean;
   created_at: string;
   updated_at: string;
-  sender_img: string;
+  sender_image: string;
   sendees: Array<Sendee> = [];
-  group_name: string;
-  agree_count: number
+  reply_counts: Object;
 
   // get currentUserSendee() {
   //    return this.findCurrentUserSendee();
