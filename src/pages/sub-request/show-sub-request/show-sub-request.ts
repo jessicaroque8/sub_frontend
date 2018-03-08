@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubRequestsProvider } from '../../../providers/sub-requests/sub-requests';
 import { SubRequest } from '../../../models/sub-request.model';
@@ -11,7 +11,8 @@ import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from '../../home/home';
 import { EditSubRequestPage } from '../edit-sub-request/edit-sub-request';
-
+import { ReplyItemComponent } from '../../../components/reply-item/reply-item';
+import { SelectedSubsProvider } from '../../../providers/selected-subs/selected-subs';
 
 @IonicPage()
 @Component({
@@ -30,7 +31,7 @@ export class ShowSubRequestPage {
    // repliesToShow: all, agree, maybe, decline, no_reply
    repliesToShow: string;
    loaded: boolean;
-   disableBack: boolean;
+   disableBack: boolean = false;
 
   constructor(
      public navCtrl: NavController,
@@ -40,28 +41,16 @@ export class ShowSubRequestPage {
      public actionSheetCtrl: ActionSheetController,
      public alertCtrl: AlertController,
      public loadingCtrl: LoadingController,
-     public toastCtrl: ToastController
+     public toastCtrl: ToastController,
+     public subs: SelectedSubsProvider,
   ) {}
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad ShowSubRequestPage');
-      this.loaded = false;
-      let loader = this.loadingCtrl.create({
-         spinner: 'dots',
-         showBackdrop: false
-      });
-      loader.present();
       this.view = this.navParams.get('view');
       this.request_id = this.navParams.get('id');
       this.repliesToShow = 'all';
-      this.sr.loadRequest(this.request_id).subscribe( request => {
-         this.request = request;
-         console.log(this.request);
-         this.sortSendeesByReplyValue();
-         loader.dismiss().then( result => {
-            this.loaded = true;
-         });
-      });
+      this.loadRequest();
    }
 
    ionViewWillLoad() {
@@ -70,6 +59,7 @@ export class ShowSubRequestPage {
    }
 
    sortSendeesByReplyValue() {
+      console.log(this.request.sendees);
       for (let s in this.request.sendees) {
          if (this.request.sendees[s].reply.value == 'agree') {
             this.sendeesAgree.push(this.request.sendees[s])
@@ -164,4 +154,39 @@ export class ShowSubRequestPage {
       toast.present();
    }
 
+   setSub(event, sendee) {
+      let params = {
+         selected_sub: {
+            sub_request_id: this.request.id,
+            sendee_id: sendee.id,
+            confirmed: false
+         }
+      }
+
+      this.subs.createSelectedSub(this.request_id, params).subscribe( res => {
+         console.log('Sub created on backend: ', res);
+
+         // Reload request to show updated attributes (awaiting_confirm or closed) after Sendee updates.
+         this.loadRequest();
+      });
+
+   }
+
+   loadRequest() {
+      this.loaded = false;
+      let loader = this.loadingCtrl.create({
+         spinner: 'dots',
+         showBackdrop: false
+      });
+      loader.present();
+
+      this.sr.loadRequest(this.request_id).subscribe( response => {
+         this.request = response as SubRequest;
+         console.log('Loaded request:', this.request);
+         this.sortSendeesByReplyValue();
+         loader.dismiss().then( result => {
+            this.loaded = true;
+         });
+      });
+   }
 }

@@ -1,27 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HttpHeaders } from '@angular/common/http';
-
+import { Angular2TokenService } from 'angular2-token';
 
 @Injectable()
 export class UsersProvider {
 
-   headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-   }
-
-   requestOptions = {
-      headers: new HttpHeaders(this.headers)
-   }
-
-  constructor(public http: HttpClient) {
+   constructor(
+      public _tokenService: Angular2TokenService
+   ) {
     console.log('Hello UsersProvider Provider');
-  }
+   }
 
    getUser(id) {
-      return this.http.get('http://10.0.0.103:8100/proxy/users/' + id);
+      return this._tokenService.get('users/' + id).map(res => res.json());
    }
 
 }

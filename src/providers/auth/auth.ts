@@ -21,13 +21,9 @@ export class AuthProvider {
   )   {
          console.log('Hello AuthProvider Provider');
 
-         // this.local.get('accessToken').then(val => {
-         //    this.accessToken = val;
-         //    console.log(this.accessToken);
-         // });
          this.local.get('currentUser').then(val => {
             this.currentUser = val;
-            console.log(this.currentUser);
+            console.log('currentUser: ', this.currentUser);
          });
       }
 

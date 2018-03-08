@@ -17,16 +17,6 @@ export class MyApp {
 
   rootPage: any=LoginPage;
 
-  headers = {
-     'Content-Type': 'application/json',
-     'Accept': 'application/json',
-     'Access-Control-Allow-Origin': '*'
-  }
-
-  requestOptions = {
-     headers: this.headers
-  }
-
   constructor(
      public platform: Platform,
      public statusBar: StatusBar,
@@ -42,36 +32,9 @@ export class MyApp {
       splashScreen.hide();
     });
 
-    this.local.get('accessToken').then(accessToken => {
-      console.log('accessToken SR ', accessToken)
-      this.headers['access-token'] = accessToken
-    });
-
-    this.local.get('expiry').then(expiry => {
-      console.log('expiry SR ', expiry)
-      this.headers['expiry'] = expiry
-    });
-
-    this.local.get('token-type').then(type => {
-      console.log('token-type ', type)
-      this.headers['token-type'] = type
-    });
-
-    this.local.get('client').then(client => {
-      console.log('client SR ', client)
-      this.headers['client'] = client
-    });
-
-    this.local.get('uid').then(uid => {
-      console.log('uid SR ', uid)
-      this.headers['uid'] = uid
-    });
-
-    this._tokenService.init({
+    let request = this._tokenService.init({
       apiBase: 'http://10.0.0.103:8100/proxy',
-      globalOptions: this.requestOptions
     });
-
   }
 
 

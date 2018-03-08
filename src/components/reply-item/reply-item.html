@@ -1,0 +1,28 @@
+<ion-item>
+   <ion-row>
+      <ion-col col-12>
+         <ion-item no-lines>
+            <ion-avatar item-start>
+               <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
+            </ion-avatar>
+            <ion-icon name="more" *ngIf="sendee.reply.value == 'agree'" (tap)="presentReplyActionSheet(sendee)" item-end></ion-icon>
+            <h2 *ngIf="sendee.reply.value !== 'no_reply'">{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}: <strong>{{ sendee.reply.value }}</strong></h2>
+            <sub *ngIf="sendee.reply.value !=='no_reply'">Replied on {{ sendee.reply.updated_at | date: 'M/dd/yy' }}</sub>
+            <h2 *ngIf="sendee.reply.value == 'no_reply'">{{ sendee['first_name'] }} {{ sendee['last_name'][0] }} hasn't replied.</h2>
+         </ion-item>
+         <ion-item no-lines text-wrap>
+            <div class="details">
+               <p class="note">
+                  La la test test dod odo odfksdf.<br />
+               </p>
+               <p *ngIf="sendee.reply.note" class="note">
+                  {{ sendee.reply['note'] }}
+               </p>
+               <p *ngIf="sendee.selected_sub"><strong>Selected as Sub</strong> on {{ sendee.selected_sub['created_at'] | date: 'M/dd/yy' }}</p>
+               <p *ngIf="sendee.selected_sub && sendee.selected_sub['confirmed'] == false"><strong>Needs to confirm</strong></p>
+               <p *ngIf="sendee.selected_sub && sendee.selected_sub['confirmed'] == true"><strong>Confirmed</strong> on {{ sendee.selected_sub['updated_at'] | date: 'M/dd/yy' }}</p>
+            </div>
+         </ion-item>
+      </ion-col>
+   </ion-row>
+</ion-item>

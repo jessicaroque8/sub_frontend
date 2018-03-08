@@ -10,6 +10,7 @@ import { RepliesProvider } from '../../providers/replies/replies';
 import { AuthProvider } from '../../providers/auth/auth';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { Sendee } from '../../models/sendee.model';
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class OpenPage {
    view: string;
    sent: Array<SubRequest> = [];
    incoming: Array<SubRequest> = [];
+   currentUserSendeeForIncoming: Array<Sendee> = [];
    loaded: boolean = false;
 
   constructor(
@@ -44,7 +46,8 @@ export class OpenPage {
       this.loaded = false;
       let loader = this.loadingCtrl.create({
           spinner: 'dots',
-          showBackdrop: false
+          showBackdrop: false,
+          enableBackdropDismiss: true
       });
       loader.present();
 
@@ -62,25 +65,13 @@ export class OpenPage {
       this.sr.loadRequests('unresolved_incoming').subscribe( requests => {
          this.incoming = requests as Array<SubRequest>;
          console.log('this.incoming: ', this.incoming);
+         this.getCurrentUserSendeeForIncomingRequests();
          this.view = 'incoming';
       }, err => {
          console.log(err);
       });
    }
 
-   // getSenderPics(view) {
-   //    for(let i in view) {
-   //       this.users.getUser(view[i].user_id).subscribe(
-   //          res => {
-   //             let sender = res as User;
-   //             view[i].sender_img = sender.image
-   //          }, err => {
-   //             console.log(err)
-   //          }
-   //       );
-   //    }
-   // }
-   //
    showRequest(id) {
       this.navCtrl.push(ShowSubRequestPage, {
          id: id,
@@ -99,9 +90,6 @@ export class OpenPage {
             reply_params['note'] = result[0]
          }
 
-         let currentUserSendee = request.currentUserSendee();
-         console.log(currentUserSendee);
-
          this.getCurrentUserSendeeAndReply(request).then( result => {
             console.log(reply_params);
             // Below is not runningß
@@ -118,6 +106,17 @@ export class OpenPage {
       });
 
 
+   }
+
+   getCurrentUserSendeeForIncomingRequests() {
+      for (let r in this.incoming) {
+         for (let s in this.incoming[r].sendees) {
+            if (this.incoming[r].sendees[s].first_name == this.auth.currentUser.first_name && this.incoming[r].sendees[s].last_name == this.auth.currentUser.last_name) {
+               this.incoming[r]['currentUserSendee'] = this.incoming[r].sendees[s];
+            }
+         }
+      }
+      console.log('Got current user sendee info for incoming requests: ', this.incoming);
    }
 
    getCurrentUserSendeeAndReply(request) {

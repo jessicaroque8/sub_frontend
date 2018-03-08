@@ -24,24 +24,64 @@
       <div [ngSwitch]="view">
         <ion-list *ngSwitchCase="'sent'">
               <ion-item *ngFor="let request of sent" (tap)="showRequest(request.id)">
-                <ion-avatar item-start><img src="{{ request.user.image }}" alt="Sender avatar"/></ion-avatar>
-                 <h2>{{ request.class_name }}</h2>
+                <ion-avatar item-start>
+                   <img src="{{ request.user.image }}" alt="Sender avatar"/>
+                </ion-avatar>
+                 <h2><strong>{{ request.class_name }}</strong></h2>
 
-                 <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
+                 <h5>{{ request.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
                  <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
+                 <ion-item no-lines>
+                    <p>{{ request.reply_counts.agree }} people have agreed to this request.</p>
+                    <p *ngIf="request.reply_counts.no_reply == 0">All replies have been received.</p>
+                    <p *ngIf="request.reply_counts.no_reply !== 0">Still waiting for {{ request.reply_counts.no_reply }} replies.</p>
+                    <p *ngIf="request.selected_sub">
+                       Sub selected: {{ request.selected_sub.first_name }} {{ request.selected_sub.last_name[0] }}.
+                       <span *ngIf="request.selected_sub &&
+                                    request.selected_sub['confirmed'] == false">
+                           Awaiting confirmation.
+                        </span>
+                    </p>
+                 </ion-item>
               </ion-item>
         </ion-list>
 
         <ion-list *ngSwitchCase="'incoming'">
-           <ion-item-sliding *ngFor="let request of incoming" #item>
+           <ion-item-sliding *ngFor="let request of incoming" (tap)="showRequest(request.id)" #item>
+             <ion-item>
+                <ion-avatar item-start>
+                    <img src="{{ request.user.image }}" alt="Sender avatar"/>
+                </ion-avatar>
+                <h2><strong>{{ request.class_name }}</strong></h2>
+                <h5>{{ request.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
+                <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
+                <ion-item no-lines>
 
-              <ion-item (tap)="showRequest(request.id)">
-                 <ion-avatar item-start><img src="{{ request.user.image }}" alt="Sender avatar"/></ion-avatar>
-                 <h2>{{ request.class_name }}</h2>
-                 <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
-                 <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
-              </ion-item>
-
+                    <p *ngIf="request.currentUserSendee.reply.value !== 'no_reply'">
+                       You replied "{{ request.currentUserSendee.reply.value }}".
+                    </p>
+                    <p *ngIf="request.currentUserSendee.reply.value == 'no_reply'">
+                       You haven't replied yet.
+                    </p>
+                    <div class="selected-sub-box"*ngIf="request.selected_sub">
+                       <p>
+                           <strong>Sub Selected: {{ request.selected_sub['first_name'] }} {{ request.selected_sub['last_name'][0] }}</strong>
+                       </p>
+                       <p *ngIf="request.selected_sub &&
+                                  request.selected_sub['confirmed'] == false">
+                           Awaiting confirmation.
+                       </p>
+                       <button *ngIf="request.selected_sub &&
+                                  request.selected_sub.first_name == auth.currentUser.first_name &&
+                                  request.selected_sub.last_name == auth.currentUser.last_name &&
+                                  request.selected_sub.confirmed == false
+                                  "
+                               ion-button round text-center>
+                           Confirm
+                        </button>
+                    </div>
+                </ion-item>
+             </ion-item>
               <ion-item-options side="right">
                  <button ion-button color="secondary" (click)="reply(request, 'agree')">Agree</button>
                  <button ion-button color="alert" (click)="reply(request, 'maybe')">Maybe</button>

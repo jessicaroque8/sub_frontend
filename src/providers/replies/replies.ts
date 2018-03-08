@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Angular2TokenService } from 'angular2-token';
 
 /*
   Generated class for the RepliesProvider provider.
@@ -11,12 +11,14 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class RepliesProvider {
 
-  constructor(public http: HttpClient) {
+  constructor(
+     public _tokenService: Angular2TokenService
+  ) {
     console.log('Hello RepliesProvider Provider');
   }
 
   editReply(sub_request_id, sendee_id, reply_id, reply_params): Observable<any> {
-     return this.http.put('http://10.0.0.103:8100/proxy/sub_requests/' + sub_request_id + '/sendees/' + sendee_id + '/reply/' + reply_id, reply_params);
+     return this._tokenService.put('sub_requests/' + sub_request_id + '/sendees/' + sendee_id + '/reply/' + reply_id, reply_params);
   }
 
 }
