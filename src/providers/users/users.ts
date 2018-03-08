@@ -12,7 +12,10 @@ export class UsersProvider {
    }
 
    getUser(id) {
-      return this._tokenService.get('users/' + id).map(res => res.json());
+      return this._tokenService.get('users/' + id)
+               .map(res => {
+                  res.json()
+               });
    }
 
 }

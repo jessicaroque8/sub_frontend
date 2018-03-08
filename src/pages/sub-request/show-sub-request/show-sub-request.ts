@@ -47,15 +47,16 @@ export class ShowSubRequestPage {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad ShowSubRequestPage');
-      this.view = this.navParams.get('view');
-      this.request_id = this.navParams.get('id');
-      this.repliesToShow = 'all';
-      this.loadRequest();
    }
 
    ionViewWillLoad() {
       this.disableBack = this.navParams.get('disableBack');
       console.log(this.disableBack);
+      this.view = this.navParams.get('view');
+      this.request_id = this.navParams.get('id');
+      this.repliesToShow = 'all';
+      this.loaded = false;
+      this.loadRequest();
    }
 
    sortSendeesByReplyValue() {
@@ -181,6 +182,7 @@ export class ShowSubRequestPage {
       loader.present();
 
       this.sr.loadRequest(this.request_id).subscribe( response => {
+         console.log(response);
          this.request = response as SubRequest;
          console.log('Loaded request:', this.request);
          this.sortSendeesByReplyValue();

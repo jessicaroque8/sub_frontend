@@ -1,34 +1,28 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Angular2TokenService } from 'angular2-token';
 
 @Injectable()
 export class MindBodyProvider {
 
-   headers = {
-     'Content-Type': 'application/json',
-     'Accept': 'application/json',
-    }
-
-   requestOptions = {
-     headers: new HttpHeaders(this.headers)
-    }
-
-  constructor(
-     public http: HttpClient,
-  ) {
+    constructor(
+       public _tokenService: Angular2TokenService
+    ) {
     console.log('Hello MindBodyProvider Provider');
   }
 
-
-
   searchClasses(searchClassData): Observable<any> {
-     return this.http.post('http://10.0.0.103:8100/proxy/search_classes/', JSON.stringify(searchClassData), this.requestOptions);
+     return this._tokenService.post('search_classes/', JSON.stringify(searchClassData))
+               .map( res => {
+                  return res.json();
+               });
   }
 
   linkToMindBody(mbData) {
-     return this.http.post('http://10.0.0.103:8100/proxy/link_to_mb', mbData, this.requestOptions);
+     return this._tokenService.post('link_to_mb', mbData)
+               .map( res=> {
+                  return res.json();
+               });
   }
 
 }

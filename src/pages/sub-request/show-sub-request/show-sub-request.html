@@ -18,7 +18,7 @@
             <ion-row>
                <ion-item no-lines>
                   <ion-avatar class="sender-image" item-start>
-                        <img src="{{ request.user.image }}" class="sender-image" alt="Sender avatar" />
+                        <img src="{{ request.user['image'] }}" class="sender-image" alt="Sender avatar" />
                   </ion-avatar>
                   <h1>{{ request.class_name }}</h1>
                   <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>

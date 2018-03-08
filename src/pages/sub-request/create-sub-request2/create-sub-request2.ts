@@ -81,7 +81,6 @@ export class CreateSubRequest2Page {
            console.log('Dismissed toast');
         });
 
-
         this.navCtrl.push(ShowSubRequestPage, {
            view: 'sent',
            id: response['id'],
