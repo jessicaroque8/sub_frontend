@@ -37,6 +37,7 @@ export class AccountPage {
 
       if (this.auth.currentUser) {
          this.users.getUser(this.auth.currentUser.id).subscribe( (res) => {
+            console.log(res);
             this.currentUser = res as User;
             console.log(this.currentUser);
             loader.dismiss().then(res => {

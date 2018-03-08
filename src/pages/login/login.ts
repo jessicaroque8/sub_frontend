@@ -38,9 +38,10 @@ export class LoginPage {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad LoginPage');
-      if (this._tokenService.userSignedIn()) {
-         this.navCtrl.push(TabsPage);
-      }
+      // if (this._tokenService.userSignedIn() === true) {
+      //    console.log('User signed in: ', this._tokenService.currentUserData);
+      //    this.navCtrl.push(TabsPage);
+      // }
    }
 
   signIn(email, password) {

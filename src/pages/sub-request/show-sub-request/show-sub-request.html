@@ -32,12 +32,17 @@
                      {{ request.note }}
                   </p>
                   <div class="chips">
-                     <ion-chip *ngIf="request.awaiting_confirm" color="danger">
+                     <ion-chip *ngIf="request.selected_sub" color="primary">
+                        <span class="chip-label">
+                           Sub Selected: {{ request.selected_sub.first_name }} {{ request.selected_sub.last_name[0] }}
+                        </span>
+                     </ion-chip>
+                     <ion-chip *ngIf="request.selected_sub && request.selected_sub.confirmed === false" color="danger">
                         <span class="chip-label">
                            Awaiting Confirmation
                         </span>
                      </ion-chip>
-                     <ion-chip *ngIf="request.closed" color="secondary">
+                     <ion-chip *ngIf="request.selected_sub && request.selected_sub.confirmed === true" color="secondary">
                         <span class="chip-label">
                            Closed
                         </span>
@@ -75,87 +80,45 @@
         <!--  Filter Bar End -->
 
         <!-- Replies -->
-         <ion-row *ngIf=" repliesToShow == 'all' ">
-            <ion-item *ngFor="let sendee of request.sendees">
-                  <ion-avatar item-end>
-                     <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
-                  </ion-avatar>
-                  <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
-                  <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
-                  <h4>{{ sendee.reply.value }}</h4>
-                  <p>
-                     {{ sendee.reply['note']}}
-                  </p>
+         <div *ngIf=" repliesToShow == 'all' ">
+            <reply-item *ngFor="let sendee of request.sendees" [sendee]="sendee" (onSubSelected)="setSub($event, sendee)"></reply-item>
+         </div>
+
+         <div *ngIf=" repliesToShow == 'agree' ">
+            <reply-item *ngFor="let sendee of sendeesAgree" [sendee]="sendee" (onSubSelected)="setSub($event, sendee)"></reply-item>
+            <ion-item *ngIf="(repliesToShow == 'agree') && (sendeesAgree.length == 0)">
+               <p>
+                  No one replied <strong>agree</strong> yet.
+               </p>
             </ion-item>
-         </ion-row>
+         </div>
 
-            <ion-row *ngIf=" repliesToShow == 'agree' ">
-                  <ion-item *ngFor="let sendee of sendeesAgree">
-                        <ion-avatar item-end>
-                           <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
-                        </ion-avatar>
-                        <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
-                        <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
-                        <p>
-                           {{ sendee.reply['note']}}
-                        </p>
-                  </ion-item>
-                  <ion-item *ngIf="(repliesToShow == 'agree') && (sendeesAgree.length == 0)">
-                     <p>
-                        No one replied "agree" yet.
-                     </p>
-                  </ion-item>
-            </ion-row>
+         <div *ngIf=" repliesToShow == 'maybe' ">
+            <reply-item *ngFor="let sendee of sendeesMaybe" [sendee]="sendee"></reply-item>
+            <ion-item *ngIf="sendeesMaybe.length == 0">
+               <p>
+                  No one replied <strong>maybe</strong> yet.
+               </p>
+            </ion-item>
+         </div>
 
-            <ion-row *ngIf=" repliesToShow == 'maybe' ">
-               <ion-item *ngFor="let sendee of sendeesMaybe">
-                  <ion-avatar item-end>
-                     <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
-                  </ion-avatar>
-                  <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
-                  <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
-                  <p>
-                     {{ sendee.reply['note']}}
-                  </p>
-               </ion-item>
-               <ion-item *ngIf="(repliesToShow == 'maybe') && (sendeesMaybe.length == 0)">
-                  <p>
-                     No one replied "maybe" yet.
-                  </p>
-               </ion-item>
-            </ion-row>
+         <div *ngIf=" repliesToShow == 'decline' ">
+            <reply-item *ngFor="let sendee of sendeesDecline" [sendee]="sendee"></reply-item>
+            <ion-item *ngIf="sendeesDecline.length == 0">
+               <p>
+                  No one replied <strong>decline</strong> yet.
+               </p>
+            </ion-item>
+         </div>
 
-            <ion-row *ngIf=" repliesToShow == 'decline' ">
-               <ion-item *ngFor="let sendee of sendeesDecline">
-                  <ion-avatar item-end>
-                     <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
-                  </ion-avatar>
-                  <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
-                  <h4>{{ sendee.reply.updated_at | date: 'MMMM d, y' }}</h4>
-                  <p>
-                     {{ sendee.reply['note']}}
-                  </p>
-               </ion-item>
-               <ion-item *ngIf="(repliesToShow == 'decline') && (sendeesDecline.length == 0)">
-                  <p>
-                     No one replied "decline" yet.
-                  </p>
-               </ion-item>
-            </ion-row>
-
-            <ion-row *ngIf=" repliesToShow == 'no_reply' ">
-               <ion-item *ngFor="let sendee of sendeesNoReply" no-lines>
-                  <ion-avatar item-end>
-                     <img src="{{ sendee['image'] }}" alt="Sendee avatar" />
-                  </ion-avatar>
-                  <h2>{{ sendee['first_name'] }} {{ sendee['last_name'][0] }}</h2>
-               </ion-item>
-               <ion-item *ngIf="(repliesToShow == 'no_reply') && (sendeesNoReply.length == 0)">
-                  <p>
-                     Everyone has replied to this request.
-                  </p>
-               </ion-item>
-            </ion-row>
+         <div *ngIf=" repliesToShow == 'no_reply' ">
+            <reply-item *ngFor="let sendee of sendeesNoReply" [sendee]="sendee"></reply-item>
+            <ion-item *ngIf="sendeesNoReply.length == 0">
+               <p>
+                  Everyone has replied to this request.
+               </p>
+            </ion-item>
+         </div>
             <!-- Replies End -->
 
    </ion-grid>

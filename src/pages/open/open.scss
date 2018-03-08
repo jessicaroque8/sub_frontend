@@ -1,3 +1,17 @@
 page-open {
+   .selected-sub-box {
+      margin-top: 10px;
+      padding: 7px;
+      border: 1px solid #D1D1D1;
+      border-radius: 5px;
+   }
 
+   .selected-sub-box > p {
+      text-align: center;
+   }
+
+   .selected-sub-box > .button {
+      display: inline;
+      margin: auto;
+   }
 }

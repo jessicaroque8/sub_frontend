@@ -1,6 +1,7 @@
 import { Sendee } from './sendee.model';
 import { User } from './user.model';
 import { Group } from './group.model';
+import { SelectedSub } from './selected-sub.model';
 
 export class SubRequest {
   id: number;
@@ -11,10 +12,12 @@ export class SubRequest {
   start_date_time: string;
   end_date_time: string;
   note: string;
-  awaiting_confirm: boolean;
   closed: boolean;
   created_at: string;
   updated_at: string;
-  sender_img: string;
+  sender_image: string;
   sendees: Array<Sendee> = [];
+  reply_counts: Object;
+  selected_sub: SelectedSub;
+
 }

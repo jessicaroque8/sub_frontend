@@ -25,6 +25,8 @@ import { CreateSubRequest1Page } from '../pages/sub-request/create-sub-request1/
 import { CreateSubRequest2Page } from '../pages/sub-request/create-sub-request2/create-sub-request2';
 import { EditSubRequestPage } from '../pages/sub-request/edit-sub-request/edit-sub-request';
 
+import { ReplyItemComponent } from '../components/reply-item/reply-item';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
@@ -33,6 +35,8 @@ import { UsersProvider } from '../providers/users/users';
 import { DatePicker } from '@ionic-native/date-picker';
 import { MindBodyProvider } from '../providers/mind-body/mind-body';
 import { GroupsProvider } from '../providers/groups/groups';
+import { RepliesProvider } from '../providers/replies/replies';
+import { SelectedSubsProvider } from '../providers/selected-subs/selected-subs';
 
 const IonicPro = Pro.init('6200de52', {
   appVersion: "0.0.1"
@@ -74,7 +78,8 @@ export class MyErrorHandler implements ErrorHandler {
     CreateAccountPage,
     CreateSubRequest1Page,
     CreateSubRequest2Page,
-    EditSubRequestPage
+    EditSubRequestPage,
+    ReplyItemComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +105,8 @@ export class MyErrorHandler implements ErrorHandler {
     CreateAccountPage,
     CreateSubRequest1Page,
     CreateSubRequest2Page,
-    EditSubRequestPage
+    EditSubRequestPage,
+    ReplyItemComponent
   ],
   providers: [
     StatusBar,
@@ -113,7 +119,9 @@ export class MyErrorHandler implements ErrorHandler {
     UsersProvider,
     DatePicker,
     MindBodyProvider,
-    GroupsProvider
+    GroupsProvider,
+    RepliesProvider,
+    SelectedSubsProvider
   ]
 })
 

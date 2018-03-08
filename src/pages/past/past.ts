@@ -25,17 +25,17 @@ export class PastPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PastPage');
     this.viewRequests = 'sent';
-    this.sr.loadRequests('past')
-      .subscribe(
-         requests => {
-            this.requests = requests
-            this.sent = this.requests.sent,
-            this.incoming = this.requests.incoming,
-            console.log('sent: ', this.sent),
-            console.log('incoming: ', this.incoming);
-
-         }, err => console.log(err)
-      );
+    // this.sr.loadRequests('past')
+    //   .subscribe(
+    //      requests => {
+    //         this.requests = requests
+    //         this.sent = this.requests.sent,
+    //         this.incoming = this.requests.incoming,
+    //         console.log('sent: ', this.sent),
+    //         console.log('incoming: ', this.incoming);
+    //
+    //      }, err => console.log(err)
+    //   );
   }
 
 }
