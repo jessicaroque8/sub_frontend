@@ -53,20 +53,10 @@ export class LoginPage {
 
      this.auth.signIn(email, password).toPromise().then( (result) => {
         console.log(result);
-        if (result === true) {
-
-           this.users.getUser(this.auth.currentUser.id).subscribe( val => {
-               this.local.set('currentUser', val).then( (val) => {
-                  console.log(val);
-                  console.log('currentUser set in local storage. ', val);
-
-
-                  console.log('Sign in success.'),
-
-                  loader.dismiss().then( (res) => {
-                     this.navCtrl.push(TabsPage)
-                  });
-               });
+        if (result == true) {
+           console.log('Sign in success.');
+            loader.dismiss().then( (res) => {
+               this.navCtrl.push(TabsPage)
             });
         } else {
            console.log('Sign in fail.'),
@@ -88,7 +78,7 @@ export class LoginPage {
             });
          }
       }).catch( (err) => {
-         console.log(JSON.stringify(err));
+         console.log(err.json());
       });
    }
 

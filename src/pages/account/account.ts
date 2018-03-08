@@ -35,26 +35,13 @@ export class AccountPage {
       });
       loader.present();
 
-      if (this.auth.currentUser) {
-         this.users.getUser(this.auth.currentUser.id).subscribe( (res) => {
-            console.log(res);
-            this.currentUser = res as User;
-            console.log(this.currentUser);
-            loader.dismiss().then(res => {
-               this.loaded = true
-            });
+      this.users.getUser(this.auth.currentUser.id).subscribe( res => {
+         this.currentUser = res as User;
+         console.log(this.currentUser);
+         loader.dismiss().then(res => {
+            this.loaded = true
          });
-      } else {
-         this.local.get('currentUser').then(currentUser => {
-            this.users.getUser(currentUser.id).subscribe( (res) => {
-               this.currentUser = res as User;
-               console.log(this.currentUser);
-               loader.dismiss().then(res => {
-                  this.loaded = true
-               });
-            });
-         });
-      }
+      });
    }
 
   logOut() {
@@ -63,9 +50,14 @@ export class AccountPage {
         showBackdrop: false
      });
      loader.present();
-     this.auth.logOut();
-     loader.dismiss();
-     this.navCtrl.setRoot(LoginPage);
-  }
+
+     this.auth.logOut().then( res => {
+        loader.dismiss().then( res => {
+           this.navCtrl.setRoot(LoginPage);
+        });
+     }).catch( rej => {
+        loader.dismiss();
+     });
+   }
 
 }
