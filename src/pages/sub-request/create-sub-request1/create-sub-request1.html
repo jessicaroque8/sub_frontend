@@ -34,8 +34,8 @@
   </h2>
 
   <div text-center>
-    <button ion-button round [outline]="searchClassData.filters.start_date_time" icon-left (tap)="showDatePicker()">
-          <ion-icon name="calendar"></ion-icon>
+    <button ion-button round [outline]="searchClassData.filters.start_date_time" icon-left (tap)="showDatePicker()" id="date-button">
+          <ion-icon name="calendar" color="primary"></ion-icon>
           <span *ngIf="!searchClassData.filters.start_date_time">Select Date & Time</span>
           <span *ngIf="searchClassData.filters.start_date_time">{{ searchClassData.filters.start_date_time | date: 'EEEE, MMM d, y, h:mm a' }}</span>
     </button>

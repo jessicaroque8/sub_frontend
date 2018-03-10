@@ -28,15 +28,15 @@ export class AuthProvider {
          return this._tokenService.signIn({
             email:    email,
             password: password
-         }).map( (response) => {
+         }).map( response => {
             console.log('Sign in response: ', response);
             if (response.status == 200) {
                this.currentUser = response.json().data
                this.local.set('currentUser', response.json().data);
                console.log('currentUser as auth property: ', this.currentUser);
-               return true
+               return true;
             } else {
-               return false
+               return false;
             }
          });
       }

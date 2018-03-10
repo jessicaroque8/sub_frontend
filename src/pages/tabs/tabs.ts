@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HomePage } from '../home/home';
+// import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 import { OpenPage } from '../open/open';
 // import { ClosedPage } from '../closed/closed';
@@ -12,11 +12,11 @@ import { AccountPage } from '../account/account';
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = OpenPage;
+  // tab1Root = HomePage;
+  tab1Root = OpenPage;
   // tab3Root = ClosedPage;
   // tab4Root = PastPage;
-  tab3Root = AccountPage;
+  tab2Root = AccountPage;
 
   constructor() {
      console.log('On TabsPage!!')

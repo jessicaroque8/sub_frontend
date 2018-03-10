@@ -51,9 +51,15 @@ export class LoginPage {
      });
      loader.present();
 
-     this.auth.signIn(email, password).toPromise().then( (result) => {
-        console.log(result);
-        if (result == true) {
+     this._tokenService.validateToken().subscribe(res => {
+        console.log(res)
+     }, err => {
+        console.log(err)
+     });
+
+     this.auth.signIn(email, password).subscribe( res => {
+        console.log(res);
+        if (res == true) {
            console.log('Sign in success.');
             loader.dismiss().then( (res) => {
                this.navCtrl.push(TabsPage)
@@ -77,8 +83,6 @@ export class LoginPage {
              alert.present();
             });
          }
-      }).catch( (err) => {
-         console.log(err.json());
       });
    }
 

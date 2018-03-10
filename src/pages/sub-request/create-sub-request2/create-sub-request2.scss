@@ -25,4 +25,33 @@ page-create-sub-request2 {
       height: 3.5px;
    }
 
+   #note-label {
+      margin-bottom: 4px;
+      font-size: 1.2rem;
+      align-self: stretch;
+      width: auto;
+      max-width: 100%;
+      color: #488aff;
+   }
+
+   #note-textarea {
+    width: calc(100%);
+    border-radius: 20px;
+    border: 2px solid #C1C0C5;
+    padding: 10px;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+   }
+
+   #group {
+      width: calc(100% - 10px);
+      border-radius: 20px;
+      border: 2px solid #C1C0C5;
+      padding: 10px;
+      margin-bottom: 10px;
+   }
+
+
 }

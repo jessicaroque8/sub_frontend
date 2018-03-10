@@ -11,6 +11,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Sendee } from '../../models/sendee.model';
+import { CreateSubRequest1Page } from '../sub-request/create-sub-request1/create-sub-request1';
+
 
 @IonicPage()
 @Component({
@@ -20,10 +22,12 @@ import { Sendee } from '../../models/sendee.model';
 export class OpenPage {
 
    view: string;
+   loaded: boolean = false;
+   sentLoadSuccess: boolean = false;
+   incomingLoadSuccess: boolean = false;
    sent: Array<SubRequest> = [];
    incoming: Array<SubRequest> = [];
-   currentUserSendeeForIncoming: Array<Sendee> = [];
-   loaded: boolean = false;
+   pushPage = CreateSubRequest1Page;
 
   constructor(
      public navCtrl: NavController,
@@ -39,7 +43,6 @@ export class OpenPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpenPage');
-    this.view = 'sent';
    }
 
    ionViewWillEnter() {
@@ -51,28 +54,45 @@ export class OpenPage {
       });
       loader.present();
 
-      this.sr.loadRequests('unresolved_sent').subscribe( requests => {
-         this.sent = requests as Array<SubRequest>;
-         console.log('this.sent: ', this.sent);
+      Promise.all([this.getSent(), this.getIncoming()]).then(res => {
          this.loaded = true;
-         loader.dismiss();
-      }, err => {
-         console.log(err);
-      });
-   }
-
-   getIncoming() {
-      this.sr.loadRequests('unresolved_incoming').subscribe( requests => {
-         this.incoming = requests as Array<SubRequest>;
-         console.log('this.incoming: ', this.incoming);
-         this.getCurrentUserSendeeForIncomingRequests();
          this.view = 'incoming';
-      }, err => {
-         console.log(err);
+         loader.dismiss();
       });
    }
 
-   showRequest(id) {
+   getSent(): Promise<boolean> {
+      return new Promise( (resolve, reject) => {
+         this.sr.loadRequests('unresolved_sent').subscribe( requests => {
+            this.sent = requests as Array<SubRequest>;
+            console.log('this.sent: ', this.sent);
+            this.sentLoadSuccess = true;
+            resolve(true);
+         }, err => {
+            console.log(err);
+            this.sentLoadSuccess = false;
+            resolve(false);
+         });
+      });
+   }
+
+   getIncoming(): Promise<boolean> {
+      return new Promise( (resolve, reject) => {
+         this.sr.loadRequests('unresolved_incoming').subscribe( requests => {
+            this.incoming = requests as Array<SubRequest>;
+            console.log('this.incoming: ', this.incoming);
+            this.getCurrentUserSendeeForIncomingRequests();
+            this.incomingLoadSuccess = true;
+            resolve(true);
+         }, err => {
+            console.log(err);
+            this.incomingLoadSuccess = false;
+            resolve(false);
+         });
+      });
+   }
+
+   goToRequest(id) {
       this.navCtrl.push(ShowSubRequestPage, {
          id: id,
          view: this.view
@@ -90,19 +110,17 @@ export class OpenPage {
             reply_params['note'] = result[0]
          }
 
-         this.getCurrentUserSendeeAndReply(request).then( result => {
-            console.log(reply_params);
-            // Below is not runningß
-            this.replies.editReply(request['id'], result['sendee']['id'], result['reply']['id'], reply_params).subscribe( res => {
-               console.log(res);
+         this.replies.editReply(request['id'],
+                                request.currentUserSendee['id'],
+                                request.currentUserSendee.reply['id'],
+                                reply_params)
+            .subscribe( res => {
                let toast = this.toastCtrl.create({
                   message: 'Sent reply: ' + reply_value + '.',
                   duration: 3000
                });
                toast.present();
             });
-         });
-
       });
 
 
@@ -111,8 +129,9 @@ export class OpenPage {
    getCurrentUserSendeeForIncomingRequests() {
       for (let r in this.incoming) {
          for (let s in this.incoming[r].sendees) {
-            if (this.incoming[r].sendees[s].first_name == this.auth.currentUser.first_name && this.incoming[r].sendees[s].last_name == this.auth.currentUser.last_name) {
-               this.incoming[r]['currentUserSendee'] = this.incoming[r].sendees[s];
+            if (this.incoming[r].sendees[s].first_name == this.auth.currentUser.first_name &&
+                this.incoming[r].sendees[s].last_name == this.auth.currentUser.last_name) {
+                  this.incoming[r]['currentUserSendee'] = this.incoming[r].sendees[s];
             }
          }
       }

@@ -1,7 +1,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Open</ion-title>
+    <ion-title>Open Requests</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only [navPush]="pushPage">
+         <ion-icon name="create"></ion-icon>
+      </button>
+   </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -10,23 +15,78 @@
 <ion-content padding>
 
    <div *ngIf="loaded">
+
       <div padding>
         <ion-segment [(ngModel)]="view">
-          <ion-segment-button value="sent">
-            Sent
-          </ion-segment-button>
-          <ion-segment-button value="incoming" (tap)="getIncoming()">
+          <ion-segment-button value="incoming">
             Incoming
+          </ion-segment-button>
+          <ion-segment-button value="sent">
+           Sent
           </ion-segment-button>
         </ion-segment>
       </div>
 
       <div [ngSwitch]="view">
-        <ion-list *ngSwitchCase="'sent'">
-              <ion-item *ngFor="let request of sent" (tap)="showRequest(request.id)">
-                <ion-avatar item-start>
-                   <img src="{{ request.user.image }}" alt="Sender avatar"/>
-                </ion-avatar>
+         <ion-list *ngSwitchCase="'incoming'">
+            <div *ngIf="incomingLoadSuccess">
+               <ion-item-sliding *ngFor="let request of incoming" (tap)="goToRequest(request.id)" #item>
+                 <ion-item>
+                    <ion-avatar item-start>
+                        <img src="{{ request.user.image }}" alt="Sender avatar"/>
+                    </ion-avatar>
+                    <h2><strong>{{ request.class_name }}</strong></h2>
+                    <h5>{{ request.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
+                    <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
+                    <ion-item no-lines>
+
+                        <p *ngIf="request.currentUserSendee.reply.value !== 'no_reply'">
+                           You replied "{{ request.currentUserSendee.reply.value }}".
+                        </p>
+                        <p *ngIf="request.currentUserSendee.reply.value == 'no_reply'">
+                           You haven't replied yet.
+                        </p>
+                        <div class="selected-sub-box"*ngIf="request.selected_sub">
+                           <p>
+                               <strong>Sub Selected: {{ request.selected_sub['first_name'] }} {{ request.selected_sub['last_name'][0] }}</strong>
+                           </p>
+                           <p *ngIf="request.selected_sub &&
+                                      request.selected_sub['confirmed'] == false">
+                               Awaiting confirmation.
+                           </p>
+                           <button *ngIf="request.selected_sub &&
+                                      request.selected_sub.first_name == auth.currentUser.first_name &&
+                                      request.selected_sub.last_name == auth.currentUser.last_name &&
+                                      request.selected_sub.confirmed == false
+                                      "
+                                   ion-button round text-center>
+                               Confirm
+                            </button>
+                        </div>
+                    </ion-item>
+                 </ion-item>
+                  <ion-item-options side="right">
+                     <button ion-button color="secondary" (click)="reply(request, 'agree')">Agree</button>
+                     <button ion-button color="alert" (click)="reply(request, 'maybe')">Maybe</button>
+                     <button ion-button color="danger" (click)="reply(request, 'decline')">Decline</button>
+                  </ion-item-options>
+
+               </ion-item-sliding>
+            </div>
+
+            <div *ngIf="!incomingLoadSuccess">
+               <ion-item>
+                  Error loading incoming requests. Please try again.
+               </ion-item>
+            </div>
+         </ion-list>
+
+         <ion-list *ngSwitchCase="'sent'">
+            <div *ngIf="sentLoadSuccess">
+              <ion-item *ngFor="let request of sent" (tap)="goToRequest(request.id)">
+               <ion-avatar item-start>
+                  <img src="{{ request.user.image }}" alt="Sender avatar"/>
+               </ion-avatar>
                  <h2><strong>{{ request.class_name }}</strong></h2>
 
                  <h5>{{ request.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
@@ -44,53 +104,16 @@
                     </p>
                  </ion-item>
               </ion-item>
-        </ion-list>
-
-        <ion-list *ngSwitchCase="'incoming'">
-           <ion-item-sliding *ngFor="let request of incoming" (tap)="showRequest(request.id)" #item>
-             <ion-item>
-                <ion-avatar item-start>
-                    <img src="{{ request.user.image }}" alt="Sender avatar"/>
-                </ion-avatar>
-                <h2><strong>{{ request.class_name }}</strong></h2>
-                <h5>{{ request.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
-                <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
-                <ion-item no-lines>
-
-                    <p *ngIf="request.currentUserSendee.reply.value !== 'no_reply'">
-                       You replied "{{ request.currentUserSendee.reply.value }}".
-                    </p>
-                    <p *ngIf="request.currentUserSendee.reply.value == 'no_reply'">
-                       You haven't replied yet.
-                    </p>
-                    <div class="selected-sub-box"*ngIf="request.selected_sub">
-                       <p>
-                           <strong>Sub Selected: {{ request.selected_sub['first_name'] }} {{ request.selected_sub['last_name'][0] }}</strong>
-                       </p>
-                       <p *ngIf="request.selected_sub &&
-                                  request.selected_sub['confirmed'] == false">
-                           Awaiting confirmation.
-                       </p>
-                       <button *ngIf="request.selected_sub &&
-                                  request.selected_sub.first_name == auth.currentUser.first_name &&
-                                  request.selected_sub.last_name == auth.currentUser.last_name &&
-                                  request.selected_sub.confirmed == false
-                                  "
-                               ion-button round text-center>
-                           Confirm
-                        </button>
-                    </div>
+            </div>
+             <div *ngIf="!sentLoadSuccess">
+                <ion-item>
+                   <h2>Error loading sent requests. Please try again.</h2>
                 </ion-item>
-             </ion-item>
-              <ion-item-options side="right">
-                 <button ion-button color="secondary" (click)="reply(request, 'agree')">Agree</button>
-                 <button ion-button color="alert" (click)="reply(request, 'maybe')">Maybe</button>
-                 <button ion-button color="danger" (click)="reply(request, 'decline')">Decline</button>
-              </ion-item-options>
+             </div>
+         </ion-list>
 
-           </ion-item-sliding>
-        </ion-list>
       </div>
+
    </div>
 
 

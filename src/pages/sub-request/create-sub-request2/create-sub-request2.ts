@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubRequest } from '../../../models/sub-request.model';
 import { AuthProvider } from '../../../providers/auth/auth';
@@ -27,6 +27,7 @@ export class CreateSubRequest2Page {
       class_name: string,
       note: string
    }
+   @ViewChild('noteTextarea') noteTextarea: ElementRef;
 
   constructor(
      public navCtrl: NavController,
@@ -89,6 +90,10 @@ export class CreateSubRequest2Page {
 
         toast.present();
      });
+  }
+
+  resize() {
+      this.noteTextarea.nativeElement.style.height = this.noteTextarea.nativeElement.scrollHeight + 'px';
   }
 
 }
