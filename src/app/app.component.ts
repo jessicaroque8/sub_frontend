@@ -33,7 +33,7 @@ export class MyApp {
     });
 
     let request = this._tokenService.init({
-      apiBase: 'http://10.0.0.103:8100/proxy',
+      apiBase: 'http://10.0.1.65:8100/proxy',
     });
   }
 
