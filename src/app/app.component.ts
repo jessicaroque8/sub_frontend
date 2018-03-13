@@ -32,7 +32,7 @@ export class MyApp {
       splashScreen.hide();
     });
 
-    let request = this._tokenService.init({
+    this._tokenService.init({
       apiBase: 'http://10.0.1.65:8100/proxy',
     });
   }
