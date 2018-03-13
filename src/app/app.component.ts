@@ -3,10 +3,6 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Angular2TokenService } from 'angular2-token';
-import { Storage } from '@ionic/storage';
-// import { HttpHeaders } from '@angular/common/http';
-
-import { AuthProvider } from '../providers/auth/auth';
 
 import { LoginPage } from '../pages/login/login';
 
@@ -21,9 +17,7 @@ export class MyApp {
      public platform: Platform,
      public statusBar: StatusBar,
      public splashScreen: SplashScreen,
-     private auth: AuthProvider,
      private _tokenService: Angular2TokenService,
-     public local: Storage
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

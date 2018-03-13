@@ -51,26 +51,42 @@ export class OpenPage {
       });
       loader.present();
 
-      this.sr.loadRequests('unresolved_sent').subscribe( requests => {
-         this.sent = requests as Array<SubRequest>;
-         console.log('this.sent: ', this.sent);
-         this.loaded = true;
-         loader.dismiss();
-      }, err => {
-         console.log(err);
+      Promise.all([this.getSent(), this.getIncoming()])
+         .then( res => {
+            console.log('Both sent and incoming are done.');
+            this.loaded = true;
+            loader.dismiss();
+         });
+   }
+
+   getSent() {
+      return new Promise( (resolve, reject) => {
+         this.sr.loadRequests('unresolved_sent').toPromise()
+         .then( requests => {
+            this.sent = requests as Array<SubRequest>;
+            console.log('this.sent: ', this.sent);
+            resolve(this.sent);
+         }).catch( err => {
+               reject(console.log(err));
+            });
       });
    }
 
    getIncoming() {
-      this.sr.loadRequests('unresolved_incoming').subscribe( requests => {
-         this.incoming = requests as Array<SubRequest>;
-         console.log('this.incoming: ', this.incoming);
-         this.getCurrentUserSendeeForIncomingRequests();
-         this.view = 'incoming';
-      }, err => {
-         console.log(err);
+      return new Promise( (resolve, reject) => {
+         this.sr.loadRequests('unresolved_incoming').toPromise()
+         .then( requests => {
+            this.incoming = requests as Array<SubRequest>;
+            this.getCurrentUserSendeeForIncomingRequests();
+            console.log('this.incoming: ', this.incoming);
+            resolve(this.incoming);
+         }).catch( err => {
+            reject(console.log(err));
+            console.log(err);
+         });
       });
    }
+
 
    showRequest(id) {
       this.navCtrl.push(ShowSubRequestPage, {
