@@ -22,8 +22,8 @@ export class OpenPage {
    view: string;
    sent: Array<SubRequest> = [];
    incoming: Array<SubRequest> = [];
-   currentUserSendeeForIncoming: Array<Sendee> = [];
    loaded: boolean = false;
+   currentUser: User;
 
   constructor(
      public navCtrl: NavController,
@@ -50,6 +50,8 @@ export class OpenPage {
           enableBackdropDismiss: true
       });
       loader.present();
+
+      this.currentUser = this.auth.getCurrentUser();
 
       Promise.all([this.getSent(), this.getIncoming()])
          .then( res => {
@@ -87,6 +89,17 @@ export class OpenPage {
       });
    }
 
+   getCurrentUserSendeeForIncomingRequests() {
+      for (let r in this.incoming) {
+         for (let s in this.incoming[r].sendees) {
+            if (this.incoming[r].sendees[s].first_name == this.currentUser.first_name && this.incoming[r].sendees[s].last_name == this.currentUser.last_name) {
+               this.incoming[r]['currentUserSendee'] = this.incoming[r].sendees[s];
+            }
+         }
+      }
+      console.log('Got current user sendee info for incoming requests: ', this.incoming);
+   }
+
 
    showRequest(id) {
       this.navCtrl.push(ShowSubRequestPage, {
@@ -95,7 +108,7 @@ export class OpenPage {
       });
    }
 
-   reply(request, reply_value, reply_note) {
+   reply(request, reply_value) {
       let reply_params = {
          value: reply_value,
          note: null
@@ -103,55 +116,19 @@ export class OpenPage {
 
       this.promptReplyNote().then( result => {
          if (result != 'Note skipped') {
-            reply_params['note'] = result[0]
+            reply_params['note'] = result;
          }
 
-         this.getCurrentUserSendeeAndReply(request).then( result => {
-            console.log(reply_params);
-            // Below is not runningß
-            this.replies.editReply(request['id'], result['sendee']['id'], result['reply']['id'], reply_params).subscribe( res => {
+         this.replies.editReply(request['id'], request['currentUserSendee']['id'], request['currentUserSendee']['reply']['id'], reply_params)
+            .subscribe( res => {
                console.log(res);
                let toast = this.toastCtrl.create({
                   message: 'Sent reply: ' + reply_value + '.',
                   duration: 3000
                });
                toast.present();
+               this.showRequest(request['id']);
             });
-         });
-
-      });
-
-
-   }
-
-   getCurrentUserSendeeForIncomingRequests() {
-      for (let r in this.incoming) {
-         for (let s in this.incoming[r].sendees) {
-            if (this.incoming[r].sendees[s].first_name == this.auth.currentUser.first_name && this.incoming[r].sendees[s].last_name == this.auth.currentUser.last_name) {
-               this.incoming[r]['currentUserSendee'] = this.incoming[r].sendees[s];
-            }
-         }
-      }
-      console.log('Got current user sendee info for incoming requests: ', this.incoming);
-   }
-
-   getCurrentUserSendeeAndReply(request) {
-      return new Promise( (resolve, reject) => {
-         this.sr.loadRequest(request.id).subscribe(
-            request => {
-               for (let s of request.sendees) {
-                  if (s.user.id == this.auth.currentUser.id) {
-                     let sendee_reply = {};
-                     sendee_reply['sendee'] = s;
-                     sendee_reply['reply'] = s['reply'];
-                     resolve(sendee_reply);
-                  };
-               }
-            },
-            err => {
-               reject(console.log(err))
-            }
-         );
       });
    }
 

@@ -35,12 +35,10 @@ export class AccountPage {
       });
       loader.present();
 
-      this.users.getUser(this.auth.currentUser.id).subscribe( res => {
-         this.currentUser = res as User;
-         console.log(this.currentUser);
-         loader.dismiss().then(res => {
+      this.currentUser = this.auth.getCurrentUser();
+      
+      loader.dismiss().then(res => {
             this.loaded = true
-         });
       });
    }
 

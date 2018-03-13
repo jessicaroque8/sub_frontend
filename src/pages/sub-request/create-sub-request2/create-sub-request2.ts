@@ -47,7 +47,7 @@ export class CreateSubRequest2Page {
      this.newRequest = foundClasses[selectedClassPosition];
         console.log(this.newRequest);
 
-     this.newRequest.user = this.auth.currentUser;
+     this.newRequest.user = this.auth.getCurrentUser();
         console.log(this.newRequest.user);
    }
 

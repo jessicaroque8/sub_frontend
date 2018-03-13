@@ -7,7 +7,6 @@ import { AuthProvider } from '../../../providers/auth/auth';
 import { LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { CreateSubRequest2Page } from '../create-sub-request2/create-sub-request2';
-import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -30,6 +29,8 @@ export class CreateSubRequest1Page {
    foundClasses: Array<any> = [];
    selectedClassPosition: number;
 
+   currentUser: User;
+
   constructor(
      public navCtrl: NavController,
      public navParams: NavParams,
@@ -43,7 +44,9 @@ export class CreateSubRequest1Page {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateSubRequest1Page');
-    this.searchClassData.filters.staff_id_mb = this.auth.currentUser.staff_id_mb;
+    this.currentUser = this.auth.getCurrentUser();
+
+    this.searchClassData.filters.staff_id_mb = this.currentUser.staff_id_mb;
     console.log(this.searchClassData.filters.start_date_time);
 
     // Remove when stable. Used to debug in browser.

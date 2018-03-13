@@ -17,11 +17,6 @@ export class AuthProvider {
      public local: Storage
   )   {
          console.log('Hello AuthProvider Provider');
-
-         this.local.get('currentUser').then(val => {
-            this.currentUser = val;
-            console.log('currentUser from local to auth property: ', this.currentUser);
-         });
       }
 
       signIn(email, password): Observable<any> {
@@ -31,12 +26,9 @@ export class AuthProvider {
          }).map( (response) => {
             console.log('Sign in response: ', response);
             if (response.status == 200) {
-               this.currentUser = response.json().data
-               this.local.set('currentUser', response.json().data);
-               console.log('currentUser as auth property: ', this.currentUser);
-               return true
+               return true;
             } else {
-               return false
+               return response;
             }
          });
       }
@@ -46,12 +38,7 @@ export class AuthProvider {
             this._tokenService.signOut().toPromise()
                .then(
                   res => {
-                     console.log('Logging out.');
-                     this.local.remove('currentUser').then( val => {
-                        console.log('local currentUser: ', val),
-                        this.currentUser = null;
-                        console.log('auth property currentUser: ', this.currentUser)
-                     });
+                     console.log('Logged out.');
                      return resolve(true);
                   }
                ).catch(
@@ -65,6 +52,10 @@ export class AuthProvider {
 
       registerAccount(userData): Observable<any> {
          return this._tokenService.registerAccount(userData);
+      }
+
+      getCurrentUser() {
+         return this._tokenService.currentUserData;
       }
 
 }

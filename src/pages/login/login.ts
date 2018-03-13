@@ -62,15 +62,13 @@ export class LoginPage {
            console.log('Sign in fail.'),
            loader.dismiss().then( result => {
              let alert = this.alertCtrl.create({
-               title: 'We couldn\'t find an account with that email/password combination. Please try again.',
+               title: result,
                buttons: [{
                  text: 'Ok',
                  handler: () => {
 
                   this.clearInput();
                   alert.dismiss();
-
-                  return false;
                  }
                }]
              });
