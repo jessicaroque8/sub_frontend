@@ -23,7 +23,9 @@ export class OpenPage {
    sent: Array<SubRequest> = [];
    incoming: Array<SubRequest> = [];
    loaded: boolean = false;
-   currentUser: User;
+   errorLoadingSent: boolean = false;
+   errorLoadingIncoming: boolean = false;
+   currentUser: any;
 
   constructor(
      public navCtrl: NavController,
@@ -55,10 +57,20 @@ export class OpenPage {
 
       Promise.all([this.getSent(), this.getIncoming()])
          .then( res => {
-            console.log('Both sent and incoming are done.');
+            console.log('Both sent and incoming are done.'),
             this.loaded = true;
             loader.dismiss();
-         });
+         }).catch( err => {
+            console.log('There was an error loading either sent or incoming requests.'),
+            this.loaded = true;
+            loader.dismiss();
+         })
+   }
+
+   ionViewWillLeave() {
+      this.loaded = false;
+      this.errorLoadingSent = false;
+      this.errorLoadingIncoming = false;
    }
 
    getSent() {
@@ -66,9 +78,10 @@ export class OpenPage {
          this.sr.loadRequests('unresolved_sent').toPromise()
          .then( requests => {
             this.sent = requests as Array<SubRequest>;
-            console.log('this.sent: ', this.sent);
+            console.log('this.sent: ', this.sent),
             resolve(this.sent);
          }).catch( err => {
+               this.errorLoadingSent = true;
                reject(console.log(err));
             });
       });
@@ -83,8 +96,8 @@ export class OpenPage {
             console.log('this.incoming: ', this.incoming);
             resolve(this.incoming);
          }).catch( err => {
+            this.errorLoadingIncoming = true;
             reject(console.log(err));
-            console.log(err);
          });
       });
    }
@@ -92,7 +105,7 @@ export class OpenPage {
    getCurrentUserSendeeForIncomingRequests() {
       for (let r in this.incoming) {
          for (let s in this.incoming[r].sendees) {
-            if (this.incoming[r].sendees[s].first_name == this.currentUser.first_name && this.incoming[r].sendees[s].last_name == this.currentUser.last_name) {
+            if (this.incoming[r].sendees[s]['first_name'] == this.currentUser['first_name'] && this.incoming[r].sendees[s]['last_name'] == this.currentUser['last_name']) {
                this.incoming[r]['currentUserSendee'] = this.incoming[r].sendees[s];
             }
          }

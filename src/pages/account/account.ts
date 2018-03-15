@@ -15,7 +15,7 @@ import { Storage } from '@ionic/storage';
 export class AccountPage {
 
    loaded: boolean = false;
-   currentUser = new User();
+   currentUser: any;
    pushLogin = LoginPage;
 
   constructor(
@@ -36,7 +36,7 @@ export class AccountPage {
       loader.present();
 
       this.currentUser = this.auth.getCurrentUser();
-      
+
       loader.dismiss().then(res => {
             this.loaded = true
       });
