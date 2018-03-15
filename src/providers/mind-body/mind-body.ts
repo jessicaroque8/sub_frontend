@@ -25,4 +25,17 @@ export class MindBodyProvider {
                });
   }
 
+  subClassTeacher(classId, subStaffId) {
+     let params = {
+        class_id: classId,
+        sub_staff_id: subStaffId
+     }
+
+     return this._tokenService.post('sub_class_teacher', params)
+      .map( res => {
+         debugger
+         return res.json();
+      })
+  }
+
 }

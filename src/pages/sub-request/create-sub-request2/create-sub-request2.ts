@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SubRequest } from '../../../models/sub-request.model';
 import { AuthProvider } from '../../../providers/auth/auth';
-import { GroupsProvider } from '../../../providers/groups/groups';
-import { Group } from '../../../models/group.model';
 import { PopoverController } from 'ionic-angular';
 import { SubRequestsProvider } from '../../../providers/sub-requests/sub-requests';
 import { ShowSubRequestPage } from '../show-sub-request/show-sub-request';
 import { ToastController } from 'ionic-angular';
+import { UsersProvider } from '../../../providers/users/users';
+import { LoadingController } from 'ionic-angular';
 
 
 @IonicPage()
@@ -17,6 +17,7 @@ import { ToastController } from 'ionic-angular';
 })
 export class CreateSubRequest2Page {
 
+   currentUser: User;
    newRequest: SubRequest = new SubRequest();
    paramsToCreate: {
       user_id: number,
@@ -32,12 +33,21 @@ export class CreateSubRequest2Page {
      public navCtrl: NavController,
      public navParams: NavParams,
      public auth: AuthProvider,
-     public groups: GroupsProvider,
      public sr: SubRequestsProvider,
-     public toastCtrl: ToastController
+     public toastCtrl: ToastController,
+     public users: UsersProvider,
+     public loadingCtrl: LoadingController
    ) {}
 
   ionViewWillLoad() {
+     let loader = this.loadingCtrl.create({
+        spinner: 'dots',
+        showBackdrop: false
+     });
+     loader.present();
+
+     this.currentUser = this.auth.getCurrentUser();
+
      let foundClasses = this.navParams.get('foundClasses');
         console.log(foundClasses);
 
@@ -47,13 +57,21 @@ export class CreateSubRequest2Page {
      this.newRequest = foundClasses[selectedClassPosition];
         console.log(this.newRequest);
 
-     this.newRequest.user = this.auth.getCurrentUser();
+     this.users.getUser(this.currentUser.id).subscribe( res => {
+        this.newRequest.user = res as User;
         console.log(this.newRequest.user);
+        loader.dismiss();
+     });
    }
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad CreateSubRequest2Page');
   }
+
+  ionViewWillLeave() {
+     this.newRequest = null;
+     this.paramsToCreate = null;
+   }
 
   createRequest() {
      console.log('newRequest: ', this.newRequest);

@@ -11,6 +11,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Sendee } from '../../models/sendee.model';
+import { MindBodyProvider } from '../../providers/mind-body/mind-body';
 
 @IonicPage()
 @Component({
@@ -36,12 +37,13 @@ export class OpenPage {
      public replies: RepliesProvider,
      public auth: AuthProvider,
      public toastCtrl: ToastController,
-     public alertCtrl: AlertController
+     public alertCtrl: AlertController,
+     public mb: MindBodyProvider
    ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpenPage');
-    this.view = 'sent';
+    this.view = 'incoming';
    }
 
    ionViewWillEnter() {
@@ -171,6 +173,12 @@ export class OpenPage {
          });
 
          prompt.present();
+      });
+   }
+
+   subClassTeacher(request) {
+      this.mb.subClassTeacher(request.class_id_mb, request.selected_sub.staff_id_mb).subscribe( res => {
+         console.log(res);
       });
    }
 

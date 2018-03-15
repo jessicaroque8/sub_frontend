@@ -3,7 +3,6 @@ import { Sendee } from './sendee.model';
 import { SubRequest } from './sub-request.model';
 
 export class User {
-   created_at: string;
    email: string;
    first_name: string;
    id: number;

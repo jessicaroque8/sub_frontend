@@ -51,32 +51,33 @@ export class LoginPage {
      });
      loader.present();
 
-     this.auth.signIn(email, password).toPromise().then( (result) => {
-        console.log(result);
-        if (result == true) {
+     this.auth.signIn(email, password).toPromise()
+     .then( (result) => {
+         console.log(result);
+         if (result == true) {
            console.log('Sign in success.');
             loader.dismiss().then( (res) => {
                this.navCtrl.push(TabsPage)
             });
-        } else {
-           console.log('Sign in fail.'),
-           loader.dismiss().then( result => {
-             let alert = this.alertCtrl.create({
-               title: result,
-               buttons: [{
-                 text: 'Ok',
-                 handler: () => {
-
-                  this.clearInput();
-                  alert.dismiss();
-                 }
-               }]
-             });
-             alert.present();
-            });
+         } else {
+           console.log('Sign in fail.')
          }
       }).catch( (err) => {
          console.log(err.json());
+         loader.dismiss().then( result => {
+           let alert = this.alertCtrl.create({
+             title: err.json().errors[0],
+             buttons: [{
+               text: 'Ok',
+               handler: () => {
+
+                this.clearInput();
+                alert.dismiss();
+               }
+             }]
+           });
+           alert.present();
+          });
       });
    }
 
