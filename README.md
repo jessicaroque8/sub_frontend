@@ -1,7 +1,7 @@
 # sub_frontend
 Frontend client for sub repository, made with Angular 5 and Ionic 3.
 
-** To build for iOS: **
+* To build for iOS: *
 1. Install dependencies as needed:
   * Node.js (https://nodejs.org/en/)
   * Ionic and Cordova CLI
