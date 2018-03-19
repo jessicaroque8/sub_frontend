@@ -27,7 +27,7 @@ export class MyApp {
     });
 
     this._tokenService.init({
-      apiBase: 'http://10.0.1.65:8100/proxy',
+      apiBase: 'http://localhost:3000',
     });
   }
 

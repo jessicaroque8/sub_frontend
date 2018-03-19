@@ -13,7 +13,11 @@
 </ion-header>
 
 <ion-content>
-   <p text-center>First, let's find and connect to your MINDBODY account.</p>
+   <ion-row>
+      <ion-col>
+         <h2 text-center>Enter your MINDBODY credentials.</h2>
+      </ion-col>
+   </ion-row>
    <form (submit)="linkToMindBodySaveData()">
 
       <ion-list>
@@ -50,9 +54,9 @@
 
 <ion-footer>
    <ion-grid>
-      <ion-row align-items-center>
-         <ion-col align-self-center>
-            <img src="../../assets/imgs/powered-by-mb-logo/small.png" text-center alt="Powered by MINDBODY"/>
+      <ion-row>
+         <ion-col text-center>
+            <img src="../../assets/imgs/powered-by-mb-logo/small.png" alt="Powered by MINDBODY"/>
          </ion-col>
       </ion-row>
    </ion-grid>

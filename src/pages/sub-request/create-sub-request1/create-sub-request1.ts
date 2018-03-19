@@ -17,7 +17,7 @@ import { User } from '../../../models/user.model';
 export class CreateSubRequest1Page {
 
    searchClassData = { filters: {
-      staff_id_mb: '',
+      staff_id_mb: null,
       start_date_time: null,
       end_date_time: null
    }};
@@ -30,7 +30,7 @@ export class CreateSubRequest1Page {
    foundClasses: Array<any> = [];
    selectedClassPosition: number;
 
-   currentUser: User;
+   currentUser: any;
 
   constructor(
      public navCtrl: NavController,
@@ -51,7 +51,7 @@ export class CreateSubRequest1Page {
     console.log(this.searchClassData.filters.start_date_time);
 
     // Remove when stable. Used to debug in browser.
-    this.searchClassData.filters.start_date_time = new Date('March 18, 2018 07:00:00');
+    this.searchClassData.filters.start_date_time = new Date('March 27, 2018 09:00:00');
     this.searchClassData.filters.end_date_time = this.searchClassData.filters.start_date_time;
 
     this.disableSearchButton = false;

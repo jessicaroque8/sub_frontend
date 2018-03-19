@@ -8,6 +8,7 @@ import { ShowSubRequestPage } from '../show-sub-request/show-sub-request';
 import { ToastController } from 'ionic-angular';
 import { UsersProvider } from '../../../providers/users/users';
 import { LoadingController } from 'ionic-angular';
+import { User } from '../../../models/user.model';
 
 
 @IonicPage()
@@ -17,7 +18,7 @@ import { LoadingController } from 'ionic-angular';
 })
 export class CreateSubRequest2Page {
 
-   currentUser: User;
+   currentUser: any;
    newRequest: SubRequest = new SubRequest();
    paramsToCreate: {
       user_id: number,
@@ -67,11 +68,6 @@ export class CreateSubRequest2Page {
   ionViewDidLoad() {
       console.log('ionViewDidLoad CreateSubRequest2Page');
   }
-
-  ionViewWillLeave() {
-     this.newRequest = null;
-     this.paramsToCreate = null;
-   }
 
   createRequest() {
      console.log('newRequest: ', this.newRequest);

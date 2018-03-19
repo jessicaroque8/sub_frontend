@@ -10,33 +10,72 @@
 <ion-content padding>
 
    <div padding>
-     <ion-segment [(ngModel)]="viewRequests">
-       <ion-segment-button value="sent">
-         Sent
-       </ion-segment-button>
-       <ion-segment-button value="incoming">
-         Incoming
-       </ion-segment-button>
+     <ion-segment [(ngModel)]="view">
+         <ion-segment-button value="incoming">
+             Incoming
+         </ion-segment-button>
+         <ion-segment-button value="sent">
+            Sent
+         </ion-segment-button>
      </ion-segment>
    </div>
 
-   <div [ngSwitch]="viewRequests">
-     <ion-list *ngSwitchCase="'sent'">
-           <ion-item *ngFor="let request of sent">
-              <h2>{{ request.class_name }}</h2>
-
-              <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
-              <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
-           </ion-item>
-     </ion-list>
-
+   <div [ngSwitch]="view">
      <ion-list *ngSwitchCase="'incoming'">
         <ion-item *ngFor="let request of incoming">
-           <h2>{{ request.class_name }}</h2>
-           <h5>{{ request.start_date_time | date: 'E, M/d/yy' }}</h5>
+           <ion-avatar item-start>
+               <img src="{{ request.selected_sub.image }}" alt="Sub avatar"/>
+          </ion-avatar>
+           <h2><strong>{{ request.class_name }}</strong></h2>
+           <h5>{{ request.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
            <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
+           <p>
+             <strong>To be subbed by {{ request.selected_sub.first_name }} {{ request.selected_sub.last_name[0] }}.</strong>
+           </p>
         </ion-item>
+        <ion-item *ngIf="errorLoadingIncoming">
+          <p>
+              There was an error loading these requests. Please try again.
+          </p>
+       </ion-item>
+       <ion-item *ngIf="incoming.length == 0">
+         <p>
+             You have no closed incoming requests.
+         </p>
+      </ion-item>
      </ion-list>
+     <ion-list *ngSwitchCase="'sent'">
+          <ion-item *ngFor="let request of sent">
+             <ion-avatar item-start>
+                 <img src="{{ request.selected_sub.image }}" alt="Sub avatar"/>
+            </ion-avatar>
+             <h2>{{ request.class_name }}</h2>
+             <h5>{{ request.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
+             <h5>{{ request.start_date_time | date: 'h:mm a'}} - {{request.end_date_time | date: 'h:mm a'}}</h5>
+             <p>
+                <strong>To be subbed by {{ request.selected_sub.first_name }} {{ request.selected_sub.last_name[0] }}.</strong>
+             </p>
+          </ion-item>
+     </ion-list>
+     <ion-item *ngIf="errorLoadingSent">
+         <p>
+            There was an error loading these requests. Please try again.
+         </p>
+     </ion-item>
+     <ion-item *ngIf="sent.length == 0">
+      <p>
+          You have no closed sent requests.
+      </p>
+   </ion-item>
    </div>
 
 </ion-content>
+<ion-footer>
+   <ion-grid>
+      <ion-row>
+         <ion-col text-center>
+            <img src="../../assets/imgs/powered-by-mb-logo/small.png" alt="Powered by MINDBODY"/>
+         </ion-col>
+      </ion-row>
+   </ion-grid>
+</ion-footer>

@@ -55,7 +55,7 @@ export class AuthProvider {
       }
 
       getCurrentUser() {
-         return this._tokenService.currentUserData as User;
+         return this._tokenService.currentUserData;
       }
 
 }

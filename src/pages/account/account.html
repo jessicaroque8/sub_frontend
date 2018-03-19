@@ -31,14 +31,27 @@
 
         <ion-item *ngIf="currentUser.staff_id_mb != '' || null">
            <ion-icon name="checkmark-circle"></ion-icon>
-           <span>Connected to MINDBODY.</span>
-        </ion-item>
-        <ion-item *ngIf="currentUser.staff_id_mb == '' || null">
-           Your account is not connected to MINDBODY Online and you aren't able to make or send requests. Tap here to connect.
+           <ion-label><strong>Connected to MINDBODY.</strong></ion-label>
         </ion-item>
       </ion-list>
 
-      <span (tap)="logOut()" [navPush]='pushLogin'><ion-icon name="log-out"></ion-icon>Log Out</span>
+      <ion-row>
+         <ion-col text-center>
+            <button round outline ion-button ion-end (tap)="logOut()" [navPush]='pushLogin'>
+               Log Out <span> </span>
+               <ion-icon name="log-out"></ion-icon>
+            </button>
+         </ion-col>
+      </ion-row>
    </div>
 
 </ion-content>
+<ion-footer>
+   <ion-grid>
+      <ion-row>
+         <ion-col text-center>
+            <img src="../../assets/imgs/powered-by-mb-logo/small.png" alt="Powered by MINDBODY"/>
+         </ion-col>
+      </ion-row>
+   </ion-grid>
+</ion-footer>

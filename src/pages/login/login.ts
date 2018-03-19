@@ -62,22 +62,39 @@ export class LoginPage {
          } else {
            console.log('Sign in fail.')
          }
-      }).catch( (err) => {
-         console.log(err.json());
-         loader.dismiss().then( result => {
-           let alert = this.alertCtrl.create({
-             title: err.json().errors[0],
-             buttons: [{
-               text: 'Ok',
-               handler: () => {
+      }).catch( err => {
+         if (err !== undefined) {
+            loader.dismiss().then( err => {
+              let alert = this.alertCtrl.create({
+                title: err.json().errors[0],
+                buttons: [{
+                  text: 'Ok',
+                  handler: () => {
 
-                this.clearInput();
-                alert.dismiss();
-               }
-             }]
-           });
-           alert.present();
-          });
+                   this.clearInput();
+                   alert.dismiss();
+                  }
+                }]
+              });
+              alert.present();
+             });
+         }
+         else {
+            loader.dismiss().then( err => {
+              let alert = this.alertCtrl.create({
+                title: 'There was an error when logging in. Please try again.',
+                buttons: [{
+                  text: 'Ok',
+                  handler: () => {
+
+                   this.clearInput();
+                   alert.dismiss();
+                  }
+                }]
+              });
+              alert.present();
+             });
+         }
       });
    }
 

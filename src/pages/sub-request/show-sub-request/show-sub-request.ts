@@ -9,7 +9,7 @@ import { ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
-import { HomePage } from '../../home/home';
+import { OpenPage } from '../../open/open';
 import { EditSubRequestPage } from '../edit-sub-request/edit-sub-request';
 import { ReplyItemComponent } from '../../../components/reply-item/reply-item';
 import { SelectedSubsProvider } from '../../../providers/selected-subs/selected-subs';
@@ -132,7 +132,7 @@ export class ShowSubRequestPage {
             this.sr.deleteRequest(this.request_id).subscribe( val => {
                console.log(val);
             });
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(OpenPage);
             this.presentToast();
           }
         }

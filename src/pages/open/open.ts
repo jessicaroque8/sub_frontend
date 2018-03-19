@@ -12,6 +12,8 @@ import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Sendee } from '../../models/sendee.model';
 import { MindBodyProvider } from '../../providers/mind-body/mind-body';
+import { CreateSubRequest1Page } from '../sub-request/create-sub-request1/create-sub-request1';
+import { SelectedSubsProvider } from '../../providers/selected-subs/selected-subs';
 
 @IonicPage()
 @Component({
@@ -27,6 +29,8 @@ export class OpenPage {
    errorLoadingSent: boolean = false;
    errorLoadingIncoming: boolean = false;
    currentUser: any;
+   pushPage = CreateSubRequest1Page;
+
 
   constructor(
      public navCtrl: NavController,
@@ -38,7 +42,8 @@ export class OpenPage {
      public auth: AuthProvider,
      public toastCtrl: ToastController,
      public alertCtrl: AlertController,
-     public mb: MindBodyProvider
+     public mb: MindBodyProvider,
+     public subs: SelectedSubsProvider,
    ) {}
 
   ionViewDidLoad() {
@@ -176,10 +181,30 @@ export class OpenPage {
       });
    }
 
-   subClassTeacher(request) {
-      this.mb.subClassTeacher(request.class_id_mb, request.selected_sub.staff_id_mb).subscribe( res => {
-         console.log(res);
-      });
+   confirmSubAndChangeOnMB(request) {
+      let selected_sub = {
+         confirmed: true
+      }
+
+      let subbed_class = {
+         class_id: request.class_id_mb,
+         sub_staff_id: request.selected_sub.staff_id_mb
+      }
+
+      this.subs.editSelectedSub(request.id, request.selected_sub.id, {selected_sub, subbed_class}).toPromise()
+         .then( res => {
+            console.log(res);
+            let toast = this.toastCtrl.create({
+               message: 'Success! You are confirmed as the sub and MINDBODY has been updated.',
+               duration: 3000
+            });
+            toast.present();
+         }).catch( err => {
+            let toast = this.toastCtrl.create({
+               message: 'Whoops. Please try again.',
+               duration: 3000
+            });
+         });
    }
 
 }

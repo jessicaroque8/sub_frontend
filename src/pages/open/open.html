@@ -2,6 +2,11 @@
 
   <ion-navbar>
     <ion-title>Open</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only [navPush]="pushPage">
+            <ion-icon name="create"></ion-icon>
+      </button>
+   </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -52,7 +57,7 @@
                                   request.selected_sub.last_name == currentUser.last_name &&
                                   request.selected_sub.confirmed == false
                                   "
-                               ion-button round text-center (tap)="subClassTeacher(request);">
+                               ion-button round text-center (tap)="confirmSubAndChangeOnMB(request);">
                            Confirm
                         </button>
                     </div>
@@ -70,6 +75,11 @@
                  There was an error loading these requests. Please try again.
              </p>
           </ion-item>
+          <ion-item *ngIf="incoming.length == 0">
+            <p>
+                You have no open incoming requests.
+            </p>
+         </ion-item>
         </ion-list>
 
          <ion-list *ngSwitchCase="'sent'">
@@ -99,10 +109,23 @@
                       There was an error loading these requests. Please try again.
                    </p>
                </ion-item>
+               <ion-item *ngIf="sent.length == 0">
+                 <p>
+                     You have no open sent requests.
+                 </p>
+             </ion-item>
          </ion-list>
 
       </div>
    </div>
 
-
 </ion-content>
+<ion-footer>
+   <ion-grid>
+      <ion-row>
+         <ion-col text-center>
+            <img src="../../assets/imgs/powered-by-mb-logo/small.png" alt="Powered by MINDBODY"/>
+         </ion-col>
+      </ion-row>
+   </ion-grid>
+</ion-footer>

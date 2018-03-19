@@ -14,13 +14,19 @@
     <ion-item>
       <ion-input [(ngModel)]="loginData.password" name="password" type="password" placeholder="Password"></ion-input>
     </ion-item>
+    <br />
     <button ion-button block type="submit">
       Log In
     </button>
   </form>
 
-  <ion-chip color="primary" [navPush]="pushPage">
-    <ion-label>Or create an account.</ion-label>
-  </ion-chip>
+  <ion-row>
+     <ion-col text-center>
+        <button color="primary" ion-button outline round [navPush]="pushPage">
+          <ion-label>Or create an account.</ion-label>
+        </button>
+     </ion-col>
+  </ion-row>
+
 
 </ion-content>

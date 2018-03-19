@@ -34,12 +34,9 @@
          <ion-avatar class="sender-image" item-start>
                <img src="{{ newRequest.user.image }}" class="sender-image" alt="Sender avatar" />
          </ion-avatar>
-         <h1>{{ newRequest.class_name }}</h1>
-         <h2>{{ newRequest.user.first_name }} {{ newRequest.user.last_name }}</h2>
-      </ion-item>
-      <ion-item>
-            <h4>{{ newRequest['start_date_time'] | date: 'EEEE, MMMM d, y' }}</h4>
-            <h4>{{ newRequest['start_date_time'] | date: 'h:mm a' }} - {{ newRequest['end_date_time'] | date: 'h:mm a' }}</h4>
+         <h2><strong>{{ newRequest.class_name }}</strong></h2>
+         <h5>{{ newRequest.start_date_time | date: 'EEEE, MMMM d, y' }}</h5>
+         <h5>{{ newRequest.start_date_time | date: 'h:mm a'}} - {{newRequest.end_date_time | date: 'h:mm a'}}</h5>
       </ion-item>
       <ion-item>
          <ion-label>Notes (optional)</ion-label>
@@ -61,7 +58,14 @@
     </div>
 
   </form>
-
-
-
 </ion-content>
+
+<ion-footer>
+   <ion-grid>
+      <ion-row>
+         <ion-col text-center>
+            <img src="../../../assets/imgs/powered-by-mb-logo/small.png" alt="Powered by MINDBODY"/>
+         </ion-col>
+      </ion-row>
+   </ion-grid>
+</ion-footer>

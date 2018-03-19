@@ -21,7 +21,7 @@ loadRequests(view: string): Observable<any> {
    }}
    return this._tokenService.get('sub_requests', params)
             .map(res => {
-               return res.json()
+               return res.json();
             });
 }
 
