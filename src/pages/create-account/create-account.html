@@ -14,14 +14,16 @@
 
 
 <ion-content padding>
-   <p>
-      Thanks, {{ params.first_name }}. Now set your login info to use with Sub.
-   </p>
+   <ion-row>
+      <ion-col>
+         <h2 text-center>Thanks, {{ params.first_name }}. Now set your login info to use with Sub.</h2>
+      </ion-col>
+   </ion-row>
 
    <form (submit)="createAccount()">
       <ion-list>
          <ion-item>
-            <ion-input [(ngModel)]="user.email" type="text" name='email' placeholder="{{ params.email }}"></ion-input>
+            <ion-input [(ngModel)]="user.email" type="text" name='email' placeholder="Email"></ion-input>
          </ion-item>
          <ion-item>
             <ion-input [(ngModel)]="user.password" type="password" name='password' placeholder="Password"></ion-input>

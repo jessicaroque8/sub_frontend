@@ -37,7 +37,6 @@ export class LinkMindBodyPage {
       mbData: {
          'email': '',
          'password': '',
-         'siteids': '',
          'first_name': '',
          'last_name': ''
       }
@@ -58,9 +57,8 @@ export class LinkMindBodyPage {
                first_name: response['first_name'],
                last_name: response['last_name'],
                image: response['image'],
-               email: this.input.mbData['email'],
-               siteids: this.input.mbData['siteids']
-             });
+               email: this.input.mbData['email']
+            });
           });
         } else {
            loader.dismiss().then( result => {
@@ -69,9 +67,6 @@ export class LinkMindBodyPage {
                buttons: [{
                  text: 'Ok',
                  handler: () => {
-                   // user has clicked the alert button
-                   // begin the alert's dismiss transition
-
                    this.clearInput().then(res => {
                       alert.dismiss();
                    });
@@ -89,7 +84,6 @@ export class LinkMindBodyPage {
       return new Promise ( (res, rej) => {
          this.input.mbData['email'] = '';
          this.input.mbData['password'] = '';
-         this.input.mbData['siteids'] = '';
          this.input.mbData['first_name'] = '';
          this.input.mbData['last_name'] = '';
 

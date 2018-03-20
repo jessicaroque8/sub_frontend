@@ -50,10 +50,6 @@ export class CreateSubRequest1Page {
     this.searchClassData.filters.staff_id_mb = this.currentUser.staff_id_mb;
     console.log(this.searchClassData.filters.start_date_time);
 
-    // Remove when stable. Used to debug in browser.
-    this.searchClassData.filters.start_date_time = new Date('March 27, 2018 09:00:00');
-    this.searchClassData.filters.end_date_time = this.searchClassData.filters.start_date_time;
-
     this.disableSearchButton = false;
     this.showNextButton = true;
   }

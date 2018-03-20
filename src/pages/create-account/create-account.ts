@@ -26,7 +26,6 @@ export class CreateAccountPage {
       first_name: "",
       last_name: "",
       email: "",
-      siteids: "",
       image: ""
    }
 
@@ -57,7 +56,6 @@ export class CreateAccountPage {
     this.params.first_name = this.navParams.get('first_name');
     this.params.last_name = this.navParams.get('last_name');
     this.params.email = this.navParams.get('email');
-    this.params.siteids = this.navParams.get('siteids');
     this.params.image = this.navParams.get('image');
     console.log(this.params);
   }
