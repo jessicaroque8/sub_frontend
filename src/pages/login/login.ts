@@ -63,10 +63,10 @@ export class LoginPage {
            console.log('Sign in fail.')
          }
       }).catch( err => {
-         if (err !== undefined) {
             loader.dismiss().then( err => {
+               console.log(err);
               let alert = this.alertCtrl.create({
-                title: err.json().errors[0],
+                title: 'Unable to log in with those credentials. Please try again.',
                 buttons: [{
                   text: 'Ok',
                   handler: () => {
@@ -78,23 +78,6 @@ export class LoginPage {
               });
               alert.present();
              });
-         }
-         else {
-            loader.dismiss().then( err => {
-              let alert = this.alertCtrl.create({
-                title: 'There was an error when logging in. Please try again.',
-                buttons: [{
-                  text: 'Ok',
-                  handler: () => {
-
-                   this.clearInput();
-                   alert.dismiss();
-                  }
-                }]
-              });
-              alert.present();
-             });
-         }
       });
    }
 

@@ -46,10 +46,7 @@ export class CreateSubRequest1Page {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateSubRequest1Page');
     this.currentUser = this.auth.getCurrentUser();
-
     this.searchClassData.filters.staff_id_mb = this.currentUser.staff_id_mb;
-    console.log(this.searchClassData.filters.start_date_time);
-
     this.disableSearchButton = false;
     this.showNextButton = true;
   }
@@ -102,11 +99,12 @@ export class CreateSubRequest1Page {
                if (foundClasses.length > 0) {
                   for (let c in foundClasses) {
                      this.foundClasses[c] = new SubRequest();
+                        this.foundClasses[c]['staff_id_mb'] = foundClasses[c]['staff_id'];
                         this.foundClasses[c]['class_id_mb'] = foundClasses[c]['class_id_mb'];
                         this.foundClasses[c]['class_name'] = foundClasses[c]['class_name'];
-                        this.foundClasses[c]['end_date_time'] = foundClasses[c]['end_date_time'];
-                        this.foundClasses[c]['staff_id_mb'] = foundClasses[c]['staff_id'];
-                        this.foundClasses[c]['start_date_time'] = foundClasses[c]['start_date_time']
+                        this.foundClasses[c]['end_date_time'] = new Date(foundClasses[c]['end_date_time']);
+                        this.foundClasses[c]['start_date_time'] = new Date(foundClasses[c]['start_date_time']);
+                        console.log('class date in current time zone: ', this.foundClasses[c]['start_date_time']);
                   }
                   loader.dismiss();
                   console.log('this.foundClasses: ', this.foundClasses),
