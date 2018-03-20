@@ -56,17 +56,17 @@
                 <strong>To be subbed by {{ request.selected_sub.first_name }} {{ request.selected_sub.last_name[0] }}.</strong>
              </p>
           </ion-item>
+          <ion-item *ngIf="errorLoadingSent">
+             <p>
+                 There was an error loading these requests. Please try again.
+             </p>
+          </ion-item>
+          <ion-item *ngIf="sent.length == 0">
+           <p>
+               You have no closed sent requests.
+           </p>
+        </ion-item>
      </ion-list>
-     <ion-item *ngIf="errorLoadingSent">
-         <p>
-            There was an error loading these requests. Please try again.
-         </p>
-     </ion-item>
-     <ion-item *ngIf="sent.length == 0">
-      <p>
-          You have no closed sent requests.
-      </p>
-   </ion-item>
    </div>
 
 </ion-content>
