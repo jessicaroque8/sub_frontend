@@ -25,7 +25,7 @@
                </ion-item>
             </ion-row>
             <ion-row>
-               <ion-item no-lines>
+               <ion-item text-wrap no-lines>
                   <h4>{{ request['start_date_time'] | date: 'EEEE, MMMM d, y' }}</h4>
                   <h4>{{ request['start_date_time'] | date: 'h:mm a' }} - {{ request['end_date_time'] | date: 'h:mm a' }}</h4>
                   <p>
@@ -37,12 +37,12 @@
                            Sub Selected: {{ request.selected_sub.first_name }} {{ request.selected_sub.last_name[0] }}
                         </span>
                      </ion-chip>
-                     <ion-chip *ngIf="request.selected_sub && request.selected_sub.confirmed === false" color="danger">
+                     <ion-chip *ngIf="request.selected_sub && request.selected_sub.confirmed == false" color="danger">
                         <span class="chip-label">
                            Awaiting Confirmation
                         </span>
                      </ion-chip>
-                     <ion-chip *ngIf="request.selected_sub && request.selected_sub.confirmed === true" color="secondary">
+                     <ion-chip *ngIf="request.selected_sub && request.selected_sub.confirmed == true" color="secondary">
                         <span class="chip-label">
                            Closed
                         </span>
